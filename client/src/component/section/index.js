@@ -1,0 +1,9 @@
+export { default as About } from "./About";
+export { default as Banner } from "./Banner";
+export { default as Sponsor } from "./Sponsor";
+export { default as Instructor } from "./Instructor";
+export { default as Achievement } from "./Achievement";
+export { default as Blog } from "./Blog";
+export { default as Category } from "./Category";
+export { default as Course } from "./Course";
+export { default as Student } from "./Student";
