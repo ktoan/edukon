@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Footer, Header, PageHeader } from "../component/layout";
+import { Review } from "../component/sidebar";
 import Author from "../component/sidebar/author";
-import Comment from "../component/sidebar/comment";
 import CourseSideCetagory from "../component/sidebar/course-cetagory";
 import CourseSideDetail from "../component/sidebar/course-detail";
 import Respond from "../component/sidebar/respond";
@@ -273,7 +273,7 @@ const CourseSingle = () => {
                   </div>
                 </div>
                 <Author />
-                <Comment />
+                <Review />
                 <Respond />
               </div>
             </div>

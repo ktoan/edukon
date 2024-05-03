@@ -6,7 +6,7 @@ import com.java.backend.request.LoginRequest;
 import com.java.backend.request.RegisterRequest;
 import com.java.backend.response.LoginResponse;
 import com.java.backend.response.MessageResponse;
-import com.java.backend.service.IUserService;
+import com.java.backend.service.UserService;
 import com.java.backend.util.JwtTokenUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class AuthController {
-    private final IUserService userService;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;

@@ -1,3 +1,5 @@
+import Rating from "./rating";
+
 const title = "02 Comment";
 
 const commentList = [
@@ -17,7 +19,7 @@ const commentList = [
   },
 ];
 
-const Comment = () => {
+const Review = () => {
   return (
     <div className="comments">
       <h4 className="title-border">{title}</h4>
@@ -33,6 +35,7 @@ const Comment = () => {
                   <h6>{val.name}</h6>
                   <span> {val.date} </span>
                 </div>
+                <Rating />
               </div>
               <p>{val.desc}</p>
             </div>
@@ -43,4 +46,4 @@ const Comment = () => {
   );
 };
 
-export default Comment;
+export default Review;

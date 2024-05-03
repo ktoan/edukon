@@ -4,8 +4,8 @@ import com.java.backend.enums.Gender;
 import com.java.backend.enums.OnlineStatus;
 import com.java.backend.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +19,8 @@ import java.util.Collections;
  */
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class UserEntity extends AbstractEntity implements UserDetails {
     private String email;
     private String password;

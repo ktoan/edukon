@@ -7,7 +7,7 @@ import com.java.backend.entity.UserEntity;
  * @author Toan Nguyen Khanh
  * @version 1.0
  */
-public interface IUserMapper {
+public interface UserMapper {
     UserEntity toEntity(UserDto userDto);
     UserDto toDto(UserEntity user);
 }

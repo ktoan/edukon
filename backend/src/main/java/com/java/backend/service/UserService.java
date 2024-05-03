@@ -9,7 +9,7 @@ import com.java.backend.request.RegisterRequest;
  * @author Toan Nguyen Khanh
  * @version 1.0
  */
-public interface IUserService {
+public interface UserService {
     UserEntity saveUser(UserEntity user);
     UserDto loadUser();
     UserDto findUserByEmail(String email);

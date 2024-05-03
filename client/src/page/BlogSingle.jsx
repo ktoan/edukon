@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import { Footer, Header, PageHeader } from "../component/layout";
+import { PageHeader } from "../component/layout";
 import Archive from "../component/sidebar/archive";
 import Author from "../component/sidebar/author";
-import Comment from "../component/sidebar/comment";
+import { Comment } from "../component/sidebar";
 import Instagram from "../component/sidebar/instagram";
 import PopularPost from "../component/sidebar/popular-post";
 import PostCategory from "../component/sidebar/post-category";
