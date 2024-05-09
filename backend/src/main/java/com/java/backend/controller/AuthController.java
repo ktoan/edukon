@@ -1,11 +1,9 @@
 package com.java.backend.controller;
 
-import com.java.backend.constant.CommonMessage;
 import com.java.backend.dto.UserDto;
+import com.java.backend.request.ConfirmAccountRequest;
 import com.java.backend.request.LoginRequest;
 import com.java.backend.request.RegisterRequest;
-import com.java.backend.response.LoginResponse;
-import com.java.backend.response.MessageResponse;
 import com.java.backend.service.UserService;
 import com.java.backend.util.JwtTokenUtil;
 import jakarta.validation.Valid;
@@ -18,10 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -35,21 +31,34 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         userService.register(registerRequest);
-
-        MessageResponse response = new MessageResponse(true, CommonMessage.CREATED_USER);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("success", true, "message", "User created successfully!"),
+                HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
+    public ResponseEntity<Object> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         loginRequest = userService.validateLogin(loginRequest);
         authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         final String token = jwtTokenUtil.generateToken(userDetails);
         final UserDto user = userService.findUserByEmail(loginRequest.getEmail());
 
-        LoginResponse response = new LoginResponse(true, token, user);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("success", true, "access_token", token, "user", user),
+                HttpStatus.OK);
+    }
+
+    @PostMapping("/request-token")
+    public ResponseEntity<Object> requestToken(@RequestParam String email) {
+        userService.requestToken(email);
+        return new ResponseEntity<>(Map.of("success", true, "message",
+                "Confirmation token has been sent. Please check your email to receive it!"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/confirm-account")
+    public ResponseEntity<Object> confirmAccount(@Valid @RequestBody ConfirmAccountRequest confirmAccountRequest) {
+        userService.confirmToken(confirmAccountRequest);
+        return new ResponseEntity<>(Map.of("success", true, "message",
+                "Your account is enable. Let's login!"), HttpStatus.ACCEPTED);
     }
 
     private void authenticate(String email, String password) {

@@ -6,13 +6,16 @@ import com.java.backend.request.CategoryRequest;
 
 import java.util.List;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 public interface CategoryService {
     CategoryEntity saveCategory(CategoryEntity category);
+
     List<CategoryDto> findAllCategories();
+
     CategoryDto createCategory(CategoryRequest categoryRequest);
+
     CategoryDto updateCategory(Integer categoryId, CategoryRequest categoryRequest);
+
+    void deleteCategory(Integer categoryId);
+
+    CategoryEntity findCategoryEntityById(Integer categoryId);
 }

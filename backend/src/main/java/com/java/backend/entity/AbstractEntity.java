@@ -11,10 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 @MappedSuperclass
 @Getter
 @Setter

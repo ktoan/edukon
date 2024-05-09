@@ -1,14 +1,11 @@
 package com.java.backend.dto;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
-@EqualsAndHashCode(callSuper = true)
-@Data
+
+@Getter
+@Setter
 public class CategoryDto extends AbstractDto {
     private String name;
     private String thumbnail;

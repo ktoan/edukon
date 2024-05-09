@@ -1,12 +1,8 @@
 package com.java.backend.exception;
 
-import lombok.Getter;
+import lombok.Data;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
-@Getter
+@Data
 public class NotFoundException extends RuntimeException {
     private String message;
 

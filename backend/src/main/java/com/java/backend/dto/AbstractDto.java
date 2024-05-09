@@ -5,10 +5,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 @Getter
 @Setter
 public abstract class AbstractDto {

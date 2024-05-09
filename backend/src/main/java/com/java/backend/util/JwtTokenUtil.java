@@ -1,22 +1,18 @@
 package com.java.backend.util;
 
 import com.java.backend.constant.AppConstants;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 @Component
 public class JwtTokenUtil {
     @Value("${jwt.secret.token}")
@@ -50,10 +46,7 @@ public class JwtTokenUtil {
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + AppConstants.VALIDITY_TIME))
                 .signWith(SignatureAlgorithm.HS512, jwtSecretCode).compact();
     }

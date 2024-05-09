@@ -7,10 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 @Component
 @RequiredArgsConstructor
 public class UserMapperImpl implements UserMapper {

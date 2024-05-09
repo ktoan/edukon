@@ -1,19 +1,18 @@
 package com.java.backend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "categories")
-@Data
+@Getter
+@Setter
 public class CategoryEntity extends AbstractEntity {
+    @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false)
     private String thumbnail;
 }

@@ -1,28 +1,22 @@
 package com.java.backend.request;
 
-import com.java.backend.constant.ExceptionMessage;
-import com.java.backend.enums.Gender;
-import jakarta.validation.constraints.*;
+import com.java.backend.annotation.MinMaxSize;
+import com.java.backend.annotation.Required;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-/**
- * @author Toan Nguyen Khanh
- * @version 1.0
- */
 @Data
 public class RegisterRequest {
-    @NotNull(message = ExceptionMessage.REQUIRED_EMAIL)
-    @NotBlank(message = ExceptionMessage.REQUIRED_EMAIL)
-    @Email(message = ExceptionMessage.VALID_EMAIL)
-    private String email;
-    @NotNull(message = ExceptionMessage.REQUIRED_PASSWORD)
-    @NotBlank(message = ExceptionMessage.REQUIRED_PASSWORD)
-    @Size(min = 6, message = ExceptionMessage.MIN_PASSWORD)
-    private String password;
-    @NotNull(message = ExceptionMessage.REQUIRED_NAME)
-    @NotBlank(message = ExceptionMessage.REQUIRED_NAME)
-    private String name;
-    @NotNull(message = ExceptionMessage.REQUIRED_GENDER)
-    @Pattern(regexp = "^(MALE|FEMALE|DISCLOSED)$", message = ExceptionMessage.VALID_GENDER)
-    private String gender;
+	@Required(fieldName = "Email")
+	@Email(message = "Email is invalid!")
+	private String email;
+	@Required(fieldName = "Password")
+	@MinMaxSize(min = 6, fieldName = "Password")
+	private String password;
+	@Required(fieldName = "Full name")
+	private String name;
+	@Required(fieldName = "Gender")
+	@Pattern(regexp = "^(MALE|FEMALE|DISCLOSED)$", message = "Gender is invalid!")
+	private String gender;
 }
