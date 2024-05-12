@@ -29,14 +29,14 @@ public class CategoryController {
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> createCategory(@Valid @ModelAttribute CategoryRequest categoryRequest) {
         CategoryDto newCategory = categoryService.createCategory(categoryRequest);
-        return new ResponseEntity<>(Map.of("success", true, "newCategory", newCategory), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("success", true, "new_category", newCategory), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> updateCategory(@RequestParam Integer categoryId,
                                                  @ModelAttribute CategoryRequest categoryRequest) {
         CategoryDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
-        return new ResponseEntity<>(Map.of("success", true, "updatedCategory", updatedCategory), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("success", true, "updated_category", updatedCategory), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")

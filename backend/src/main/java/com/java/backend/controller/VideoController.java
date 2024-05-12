@@ -21,13 +21,14 @@ public class VideoController {
 	@PostMapping("/create")
 	public ResponseEntity<Object> createVideo(@Valid @ModelAttribute VideoRequest videoRequest) {
 		VideoDto newVideo = videoService.createVideo(videoRequest);
-		return new ResponseEntity<>(Map.of("success", true, "newVideo", newVideo), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("success", true, "new_video", newVideo), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Object> updateVideo(@RequestParam Integer videoId, @ModelAttribute VideoRequest videoRequest) {
+	public ResponseEntity<Object> updateVideo(@RequestParam Integer videoId,
+	                                          @ModelAttribute VideoRequest videoRequest) {
 		VideoDto updatedVideo = videoService.updateVideo(videoId, videoRequest);
-		return new ResponseEntity<>(Map.of("success", true, "updatedVideo", updatedVideo), HttpStatus.OK);
+		return new ResponseEntity<>(Map.of("success", true, "updated_video", updatedVideo), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete")

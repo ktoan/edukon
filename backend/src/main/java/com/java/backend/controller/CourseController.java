@@ -29,14 +29,14 @@ public class CourseController {
 	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Object> createCourse(@Valid @ModelAttribute CourseRequest courseRequest) {
 		CourseDto newCourse = courseService.createCourse(courseRequest);
-		return new ResponseEntity<>(Map.of("success", true, "newCourse", newCourse), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("success", true, "new_course", newCourse), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<Object> updateCourse(@RequestParam Integer courseId,
 	                                           @Valid @RequestBody CourseRequest courseRequest) {
 		CourseDto updatedCourse = courseService.updateCourse(courseId, courseRequest);
-		return new ResponseEntity<>(Map.of("success", true, "updatedCourse", updatedCourse), HttpStatus.OK);
+		return new ResponseEntity<>(Map.of("success", true, "updated_course", updatedCourse), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete")

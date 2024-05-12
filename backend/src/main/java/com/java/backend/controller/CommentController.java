@@ -21,13 +21,13 @@ public class CommentController {
 	@PostMapping("/create")
 	public ResponseEntity<Object> createComment(@Valid @RequestBody CommentRequest commentRequest) {
 		CommentDto newComment = commentService.createComment(commentRequest);
-		return new ResponseEntity<>(Map.of("success", true, "newComment", newComment), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("success", true, "new_comment", newComment), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<Object> updateComment(@RequestParam Integer commentId, @RequestParam String comment) {
 		CommentDto updatedComment = commentService.updateComment(commentId, comment);
-		return new ResponseEntity<>(Map.of("success", true, "updatedComment", updatedComment), HttpStatus.OK);
+		return new ResponseEntity<>(Map.of("success", true, "updated_comment", updatedComment), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete")

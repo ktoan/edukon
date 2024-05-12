@@ -23,57 +23,57 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final UserDetailsService userDetailsService;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
-            throws Exception {
-        return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/api/v1/auth/**").permitAll();
-                    // Public route
-                    registry.requestMatchers(HttpMethod.GET, "/api/v1/category/**").permitAll();
-                    registry.requestMatchers(HttpMethod.GET, "/api/v1/blog/**").permitAll();
-                    registry.requestMatchers(HttpMethod.GET, "/api/v1/course/**").permitAll();
-                    // Admin/Instructor permission
-                    registry.requestMatchers(HttpMethod.POST, "/api/v1/blog/**")
-                            .hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.PUT, "/api/v1/blog/**")
-                            .hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.DELETE, "/api/v1/blog/**")
-                            .hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.DELETE, "/api/v1/course/**")
-                            .hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
-                    // Only admin permission
-                    registry.requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
-                    registry.requestMatchers(HttpMethod.PUT, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
-                    registry.requestMatchers(HttpMethod.DELETE, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
-                    // Only instructor permission
-                    registry.requestMatchers(HttpMethod.POST, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.PUT, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.POST, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
-                    registry.requestMatchers(HttpMethod.PUT, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
-                    registry.anyRequest().authenticated();
-                }).userDetailsService(userDetailsService)
-                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .authenticationProvider(authenticationProvider()).build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
+			throws Exception {
+		return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(registry -> {
+					registry.requestMatchers("/api/v1/auth/**").permitAll();
+					// Public route
+					registry.requestMatchers(HttpMethod.GET, "/api/v1/category/**").permitAll();
+					registry.requestMatchers(HttpMethod.GET, "/api/v1/blog/**").permitAll();
+					registry.requestMatchers(HttpMethod.GET, "/api/v1/course/**").permitAll();
+					// Admin/Instructor permission
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/blog/**")
+							.hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.PUT, "/api/v1/blog/**")
+							.hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.DELETE, "/api/v1/blog/**")
+							.hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.DELETE, "/api/v1/course/**")
+							.hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());
+					// Only admin permission
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
+					registry.requestMatchers(HttpMethod.PUT, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
+					registry.requestMatchers(HttpMethod.DELETE, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
+					// Only instructor permission
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.PUT, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.PUT, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
+					registry.anyRequest().authenticated();
+				}).userDetailsService(userDetailsService)
+				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.authenticationProvider(authenticationProvider()).build();
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
-        return authenticationProvider;
-    }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder);
+		return authenticationProvider;
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-            throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+			throws Exception {
+		return configuration.getAuthenticationManager();
+	}
 }

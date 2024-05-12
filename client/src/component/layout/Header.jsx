@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ROUTES } from "../../constant";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../redux/action/authAction";
 
 const phoneNumber = "+84 868 319 857";
 const address = "Ngu Hanh Son District, Da Nang City";
@@ -29,9 +31,12 @@ let socialList = [
 ];
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [menuToggle, setMenuToggle] = useState(false);
   const [socialToggle, setSocialToggle] = useState(false);
   const [headerFiexd, setHeaderFiexd] = useState(false);
+
+  const { user } = useSelector((state) => state.auth);
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 200) {
@@ -92,14 +97,32 @@ const Header = () => {
                   )}
                 </ul>
               </div>
-
-              <Link to="/login" className="login">
-                <i className="icofont-user"></i> <span>LOG IN</span>{" "}
-              </Link>
-              <Link to="/sign-up" className="signup">
-                <i className="icofont-users"></i> <span>SIGN UP</span>{" "}
-              </Link>
-
+              {!user && (
+                <>
+                  <Link to="/login" className="login">
+                    <i className="icofont-user"></i> <span>LOG IN</span>
+                  </Link>
+                  <Link to="/sign-up" className="signup">
+                    <i className="icofont-users"></i> <span>SIGN UP</span>
+                  </Link>
+                </>
+              )}
+              {user && (
+                <>
+                  <Link to="/profile">
+                    <i className="icofont-user"></i>
+                    <span className="fw-bold">{user.name}</span>
+                  </Link>
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => logoutUser(dispatch)}
+                    className="mx-3 text-danger"
+                  >
+                    <i className="icofont-exit"></i>
+                    <span className="fw-bold">Logout</span>
+                  </span>
+                </>
+              )}
               <div
                 className={`header-bar d-lg-none ${menuToggle ? "active" : ""}`}
                 onClick={() => setMenuToggle(!menuToggle)}

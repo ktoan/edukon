@@ -28,13 +28,13 @@ public class BlogController {
     @PostMapping("/create")
     public ResponseEntity<Object> createBlog(@Valid @ModelAttribute BlogRequest blogRequest) {
         BlogDto newBlog = blogService.createBlog(blogRequest);
-        return new ResponseEntity<>(Map.of("success", true, "newBlog", newBlog), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("success", true, "new_blog", newBlog), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Object> updateBlog(@RequestParam Integer blogId, @ModelAttribute BlogRequest blogRequest) {
         BlogDto updatedBlog = blogService.updateBlog(blogId, blogRequest);
-        return new ResponseEntity<>(Map.of("success", true, "updatedBlog", updatedBlog), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("success", true, "updated_blog", updatedBlog), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")

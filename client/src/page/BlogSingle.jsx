@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { PageHeader } from "../component/layout";
+import { Review } from "../component/sidebar";
 import Archive from "../component/sidebar/archive";
 import Author from "../component/sidebar/author";
-import { Comment } from "../component/sidebar";
 import Instagram from "../component/sidebar/instagram";
 import PopularPost from "../component/sidebar/popular-post";
 import PostCategory from "../component/sidebar/post-category";
@@ -228,7 +228,7 @@ const BlogSingle = () => {
                         </div>
                       </div>
                       <Author />
-                      <Comment />
+                      <Review />
                       <Respond />
                     </div>
                   </div>

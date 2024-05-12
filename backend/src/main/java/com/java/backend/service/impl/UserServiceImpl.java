@@ -16,6 +16,7 @@ import com.java.backend.request.LoginRequest;
 import com.java.backend.request.RegisterRequest;
 import com.java.backend.service.ConfirmationTokenService;
 import com.java.backend.service.UserService;
+import com.java.backend.util.ContextUtil;
 import com.java.backend.util.MailUtil;
 import com.java.backend.util.StringUtil;
 import jakarta.mail.MessagingException;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private final MailUtil mailUtil;
 	private final StringUtil stringUtil;
 	private final MessageSource messageSource;
+	private final ContextUtil contextUtil;
 
 	@Override
 	public UserEntity saveUser(UserEntity user) {
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserDto loadUser() {
-		return null;
+		return userMapper.toDto(contextUtil.loadUserFromContext());
 	}
 
 	@Override

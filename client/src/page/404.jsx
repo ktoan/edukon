@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ROUTES } from "../constant";
 
 const title = "Error 404!";
 const desc = "Oops! The Page You Are Looking For Could Not Be Found";
@@ -7,7 +6,10 @@ const btnText = "Go Back To Home";
 
 const ErrorPage = () => {
   return (
-    <div className="four-zero-section padding-tb section-bg">
+    <div
+      style={{ height: "100vh" }}
+      className="four-zero-section padding-tb section-bg"
+    >
       <div className="container">
         <div className="row align-items-center">
           <div className="col-lg-4 col-sm-6 col-12">

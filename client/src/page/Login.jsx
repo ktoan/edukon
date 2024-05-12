@@ -1,6 +1,8 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { PageHeader } from "../component/layout";
+import { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../redux/action/authAction";
+import { showToastError, showToastSuccess } from "../util/toastAction";
 
 const title = "Login";
 const socialTitle = "Login With Social Media";
@@ -35,22 +37,85 @@ const socialList = [
 ];
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  function clearLoginForm() {
+    setLoginForm({
+      email: "",
+      password: "",
+    });
+  }
+
+  function onChangeFormInput(e) {
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+  }
+
+  function onSubmitLoginForm(e) {
+    e.preventDefault();
+    setLoading(true);
+    let permitSubmit = true;
+    if (!loginForm.email || !loginForm.password) {
+      permitSubmit = false;
+      showToastError("All fields must be filled!");
+      setLoading(false);
+    }
+    if (permitSubmit) {
+      function next() {
+        clearLoginForm();
+        setLoading(false);
+        showToastSuccess("Login successfully!");
+      }
+      function errorHandle(error) {
+        setLoading(false);
+        showToastError(
+          error.response ? error.response.data.message : error.message
+        );
+        if (error.response.data.statusCode === 403) {
+          navigate("/verify-account", {
+            state: { prevEmail: loginForm.email },
+          });
+        }
+      }
+      loginUser(dispatch, loginForm, next, errorHandle);
+    }
+  }
+
   return (
     <Fragment>
-      <PageHeader title={"Login Page"} curPage={"Login"} />
-      <div className="login-section padding-tb section-bg">
+      <div
+        style={{ height: "100vh" }}
+        className="login-section padding-tb section-bg"
+      >
         <div className="container">
           <div className="account-wrapper">
             <h3 className="title">{title}</h3>
-            <form className="account-form">
+            <form
+              onSubmit={(e) => onSubmitLoginForm(e)}
+              className="account-form"
+            >
               <div className="form-group">
-                <input type="text" name="name" placeholder="User Name *" />
+                <input
+                  type="text"
+                  value={loginForm.email}
+                  onChange={(e) => onChangeFormInput(e)}
+                  name="email"
+                  placeholder="Email"
+                />
               </div>
               <div className="form-group">
                 <input
                   type="password"
+                  value={loginForm.password}
+                  onChange={(e) => onChangeFormInput(e)}
                   name="password"
-                  placeholder="Password *"
+                  placeholder="Password"
                 />
               </div>
               <div className="form-group">
@@ -63,7 +128,11 @@ const Login = () => {
                 </div>
               </div>
               <div className="form-group text-center">
-                <button className="d-block lab-btn">
+                <button
+                  disabled={loading}
+                  type="submit"
+                  className={`d-block lab-btn ${loading && `bg-dark`}`}
+                >
                   <span>{btnText}</span>
                 </button>
               </div>

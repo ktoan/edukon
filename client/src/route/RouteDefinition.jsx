@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ROUTES } from "../constant";
 import { Footer, Header, ScrollToTop } from "../component/layout";
-import { ErrorPage } from "../page";
+import { ErrorPage, Login, SignUp } from "../page";
+import ProtectAuthenticatedRoute from "./ProtectAuthenticatedRoute";
+import VerifyAccount from "../page/VerifyAccount";
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -34,6 +36,11 @@ const RouteDefinition = () => {
             />
           );
         })}
+        <Route element={<ProtectAuthenticatedRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/verify-account" element={<VerifyAccount />} />
+        </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>

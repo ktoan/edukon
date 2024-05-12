@@ -7,9 +7,7 @@ import {
   CourseSingle,
   CourseView,
   HomePage,
-  Login,
   SavedPage,
-  SignUp,
 } from "../page";
 
 export const ROUTES = [
@@ -32,6 +30,13 @@ export const ROUTES = [
   { name: "Course Single", path: "/course-single", component: CourseSingle },
   { name: "Course View", path: "/course-view", component: CourseView },
   { name: "Saved Page", path: "/saved", component: SavedPage },
-  { name: "Login Page", path: "/login", component: Login },
-  { name: "Sign Up Page", path: "/sign-up", component: SignUp },
 ];
+
+const BASE = "http://localhost:8080/api/v1";
+export const API_ROUTES = {
+  loadUser: BASE + "/auth/load-user",
+  login: BASE + "/auth/login",
+  register: BASE + "/auth/register",
+  requestToken: BASE + "/auth/request-token",
+  confirmAccount: BASE + "/auth/confirm-account",
+};
