@@ -32,7 +32,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
 			throws Exception {
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(registry -> {
-					registry.requestMatchers("/api/v1/auth/**").permitAll();
+					registry.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/request-token",
+							"/api/v1/auth/confirm-account").permitAll();
 					// Public route
 					registry.requestMatchers(HttpMethod.GET, "/api/v1/category/**").permitAll();
 					registry.requestMatchers(HttpMethod.GET, "/api/v1/blog/**").permitAll();
@@ -55,6 +56,8 @@ public class SecurityConfig {
 					registry.requestMatchers(HttpMethod.PUT, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
 					registry.requestMatchers(HttpMethod.POST, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
 					registry.requestMatchers(HttpMethod.PUT, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
+					// Only student permission
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/review/**").hasAuthority(Role.STUDENT.name());
 					registry.anyRequest().authenticated();
 				}).userDetailsService(userDetailsService)
 				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint))

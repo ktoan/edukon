@@ -1,50 +1,50 @@
-import React, { Fragment } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ROUTES } from "../constant";
-import { Footer, Header, ScrollToTop } from "../component/layout";
-import { ErrorPage, Login, SignUp } from "../page";
-import ProtectAuthenticatedRoute from "./ProtectAuthenticatedRoute";
-import VerifyAccount from "../page/VerifyAccount";
-
-const DefaultLayout = ({ children }) => {
-  return (
-    <Fragment>
-      <Header />
-      {children}
-      <Footer />
-    </Fragment>
-  );
-};
+import React from 'react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { ScrollToTop } from '../component/layout'
+import {
+  AboutPage,
+  BlogPage,
+  ContactPage,
+  CoursePage,
+  CourseSinglePage,
+  CourseViewPage,
+  EnrollPage,
+  EnrollPaypalPage,
+  Error404,
+  ErrorPage,
+  HomePage,
+  LoginPage,
+  ProfilePage,
+  SignUpPage
+} from '../page'
+import VerifyAccount from '../page/VerifyAccount'
+import ProtectAuthenticatedRoute from './ProtectAuthenticatedRoute'
 
 const RouteDefinition = () => {
   return (
     <Router>
       <ScrollToTop />
       <Routes>
-        {ROUTES.map((item, index) => {
-          const Page = item.component || Fragment;
-          const Layout = item.layout != null ? item.layout : DefaultLayout;
-          return (
-            <Route
-              key={index}
-              element={
-                <Layout>
-                  <Page />
-                </Layout>
-              }
-              path={item.path}
-            />
-          );
-        })}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/course" element={<CoursePage />} />
+        <Route path="/view-course/:courseId" element={<CourseViewPage />} />
+        <Route path="/course/detail/:courseId" element={<CourseSinglePage />} />
+        <Route path="/enroll/:courseId" element={<EnrollPage />} />
+        <Route path="/enroll/paypal" element={<EnrollPaypalPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route element={<ProtectAuthenticatedRoute />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/verify-account" element={<VerifyAccount />} />
         </Route>
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="/failed" element={<ErrorPage />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default RouteDefinition;
+export default RouteDefinition

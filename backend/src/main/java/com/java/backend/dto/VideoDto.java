@@ -9,4 +9,5 @@ public class VideoDto extends AbstractDto {
 	private String title;
 	private String preDescription;
 	private String source;
+	private VideoDto video;
 }

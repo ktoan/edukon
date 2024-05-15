@@ -55,7 +55,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserDto loadUser() {
-		return userMapper.toDto(contextUtil.loadUserFromContext());
+		try {
+			UserEntity user = contextUtil.loadUserFromContext();
+			return userMapper.toDto(user);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

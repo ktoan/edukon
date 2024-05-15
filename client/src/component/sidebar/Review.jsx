@@ -1,23 +1,23 @@
-import Rating from "./rating";
+import Rating from './Rating'
 
-const title = "02 Comment";
+const title = '02 Comment'
 
 const commentList = [
   {
-    imgUrl: "assets/images/author/02.jpg",
-    imgAlt: "rajibraj91",
-    name: "Linsa Faith",
-    date: "Jun 5, 2022 at 12:41 pm",
-    desc: "The inner sanctuary, I throw myself down among the tall grass bye the trckli stream and, as I lie close to the earth",
+    imgUrl: 'assets/images/author/02.jpg',
+    imgAlt: 'rajibraj91',
+    name: 'Linsa Faith',
+    date: 'Jun 5, 2022 at 12:41 pm',
+    desc: 'The inner sanctuary, I throw myself down among the tall grass bye the trckli stream and, as I lie close to the earth'
   },
   {
-    imgUrl: "assets/images/author/03.jpg",
-    imgAlt: "rajibraj91",
-    name: "Mahdi Mahmud",
-    date: "Jun 5, 2022 at 12:41 pm",
-    desc: "The inner sanctuary, I throw myself down among the tall grass bye the trckli stream and, as I lie close to the earth",
-  },
-];
+    imgUrl: 'assets/images/author/03.jpg',
+    imgAlt: 'rajibraj91',
+    name: 'Mahdi Mahmud',
+    date: 'Jun 5, 2022 at 12:41 pm',
+    desc: 'The inner sanctuary, I throw myself down among the tall grass bye the trckli stream and, as I lie close to the earth'
+  }
+]
 
 const Review = () => {
   return (
@@ -43,7 +43,7 @@ const Review = () => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Review;
+export default Review

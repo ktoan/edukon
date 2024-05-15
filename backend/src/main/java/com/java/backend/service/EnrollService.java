@@ -10,4 +10,5 @@ public interface EnrollService {
 	String createPayment(EnrollRequest enrollRequest);
 
 	boolean isEnrollCourse(String paymentMethod, ExecutePaypalRequest executePaypalRequest);
+	boolean isUserEnrolled(Integer courseId);
 }

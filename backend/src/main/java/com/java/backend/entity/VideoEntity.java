@@ -1,9 +1,6 @@
 package com.java.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +15,7 @@ public class VideoEntity extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "course_id")
 	private CourseEntity course;
+	@OneToOne(mappedBy = "video")
+	@JoinColumn(name = "assignment_id")
+	private AssignmentEntity assignment;
 }

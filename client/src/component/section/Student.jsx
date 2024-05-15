@@ -1,25 +1,25 @@
-import { Link } from "react-router-dom";
-import Rating from "../sidebar/rating";
+import { Link } from 'react-router-dom'
+import Rating from '../sidebar/Rating'
 
-const subTitle = "Loved by 200,000+ students";
-const title = "Students Community Feedback";
+const subTitle = 'Loved by 200,000+ students'
+const title = 'Students Community Feedback'
 
 const studentList = [
   {
-    imgUrl: "assets/images/feedback/student/01.jpg",
-    imgAlt: "student rajibraj91 rajibraj",
-    name: "Oliver Beddows",
-    degi: "UX designer",
-    desc: "Rapidiously buildcollaboration anden deas sharing viaing and bleedng edgeing nterfaces fnergstcally plagiarize teams anbuilding paradgms whereas goingi forward process and monetze",
+    imgUrl: 'assets/images/feedback/student/01.jpg',
+    imgAlt: 'student rajibraj91 rajibraj',
+    name: 'Oliver Beddows',
+    degi: 'UX designer',
+    desc: 'Rapidiously buildcollaboration anden deas sharing viaing and bleedng edgeing nterfaces fnergstcally plagiarize teams anbuilding paradgms whereas goingi forward process and monetze'
   },
   {
-    imgUrl: "assets/images/feedback/student/02.jpg",
-    imgAlt: "student rajibraj91 rajibraj",
-    name: "Madley Pondor",
-    degi: "UX designer",
-    desc: "Rapidiously buildcollaboration anden deas sharing viaing and bleedng edgeing nterfaces fnergstcally plagiarize teams anbuilding paradgms whereas goingi forward process and monetze",
-  },
-];
+    imgUrl: 'assets/images/feedback/student/02.jpg',
+    imgAlt: 'student rajibraj91 rajibraj',
+    name: 'Madley Pondor',
+    degi: 'UX designer',
+    desc: 'Rapidiously buildcollaboration anden deas sharing viaing and bleedng edgeing nterfaces fnergstcally plagiarize teams anbuilding paradgms whereas goingi forward process and monetze'
+  }
+]
 
 const Student = () => {
   return (
@@ -34,15 +34,8 @@ const Student = () => {
             <div className="col">
               <div className="sf-left">
                 <div className="sfl-thumb">
-                  <img
-                    src="assets/images/feedback/01.jpg"
-                    alt="student feedback"
-                  />
-                  <a
-                    href="https://www.youtube.com/embed/MU3qrgR2Kkc"
-                    className="video-button popup"
-                    target="_blank"
-                  >
+                  <img src="assets/images/feedback/01.jpg" alt="student feedback" />
+                  <a href="https://www.youtube.com/embed/MU3qrgR2Kkc" className="video-button popup" target="_blank">
                     <i className="icofont-ui-play"></i>
                   </a>
                 </div>
@@ -79,7 +72,7 @@ const Student = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Student;
+export default Student

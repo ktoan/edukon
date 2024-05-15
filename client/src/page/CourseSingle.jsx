@@ -1,81 +1,112 @@
-import { Fragment } from "react";
-import { Footer, Header, PageHeader } from "../component/layout";
-import { Review } from "../component/sidebar";
-import Author from "../component/sidebar/author";
-import CourseSideCetagory from "../component/sidebar/course-cetagory";
-import CourseSideDetail from "../component/sidebar/course-detail";
-import Respond from "../component/sidebar/respond";
+import { Fragment, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { Footer, Header, PageHeader } from '../component/layout'
+import Loading from '../component/section/Loading'
+import { Review } from '../component/sidebar'
+import Author from '../component/sidebar/author'
+import CourseSideCetagory from '../component/sidebar/course-cetagory'
+import Respond from '../component/sidebar/respond'
+import withBaseLogic from '../hoc/withBaseLogic'
+import { fetchCourseDetail } from '../redux/action/courseAction'
+import { showToastError } from '../util/toastAction'
+
+const price = '89'
+const excenge = 'Limited time offer'
+const shareTitle = 'Share This Course:'
+const btnText = 'Enrolled Now'
+
+const csdcList = [
+  {
+    iconName: 'icofont-ui-alarm',
+    leftText: 'Course level',
+    rightText: 'Beginner'
+  },
+  {
+    iconName: 'icofont-book-alt',
+    leftText: 'Course Duration',
+    rightText: '10 week'
+  },
+  {
+    iconName: 'icofont-signal',
+    leftText: 'Online Class',
+    rightText: '08'
+  },
+  {
+    iconName: 'icofont-video-alt',
+    leftText: 'Lessions',
+    rightText: '18x'
+  },
+  {
+    iconName: 'icofont-abacus-alt',
+    leftText: 'Quizzes',
+    rightText: '0'
+  },
+  {
+    iconName: 'icofont-hour-glass',
+    leftText: 'Pass parcentages',
+    rightText: '80'
+  },
+  {
+    iconName: 'icofont-certificate',
+    leftText: 'Certificate',
+    rightText: 'Yes'
+  },
+  {
+    iconName: 'icofont-globe',
+    leftText: 'Language',
+    rightText: 'English'
+  }
+]
+
+const socialList = [
+  {
+    siteLink: '#',
+    iconName: 'icofont-twitter',
+    className: 'twitter'
+  },
+  {
+    siteLink: '#',
+    iconName: 'icofont-vimeo',
+    className: 'vimeo'
+  },
+  {
+    siteLink: '#',
+    iconName: 'icofont-rss',
+    className: 'rss'
+  }
+]
 
 const CourseSingle = () => {
-  return (
+  const [courseDetail, setCourseDetail] = useState(null)
+  const params = useParams()
+  const { courseId } = params
+  const [isEnrolled, setEnrolled] = useState(false)
+
+  useEffect(() => {
+    if (courseId) {
+      function next(courseDetail, isEnrolled) {
+        setEnrolled(isEnrolled)
+        setCourseDetail(courseDetail)
+      }
+      function errorHandle(message) {
+        showToastError(message)
+      }
+      fetchCourseDetail(courseId, next, errorHandle)
+    }
+  }, [courseId])
+
+  return courseDetail ? (
     <Fragment>
       <Header />
-      <PageHeader curPage={"Data Structure"} />
+      <PageHeader curPage={courseDetail.name} />
       <div className="course-single-section padding-tb section-bg">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="main-part">
-                <div className="course-item">
-                  <div className="course-inner">
-                    <div className="course-content">
-                      <h3>Course Overview</h3>
-                      <p>
-                        In this course take you from the fundamentals and
-                        concepts of data modeling all the way through anumber of
-                        best practices and techniques that you’ll need to build
-                        data models in your organization. You’ll find many By
-                        the end of the course, you’ll be all set to not only put
-                        these principles to works but also to maike the key data
-                        modeling and design decisions required by the info data
-                        modeling that transcend the nuts-and-bolts that clearly
-                        the key covered the course and design patterns.
-                      </p>
-                      <h4>What You'll Learn in This Course:</h4>
-                      <ul className="lab-ul">
-                        <li>
-                          <i className="icofont-tick-mark"></i>Ready to begin
-                          working on real-world data modeling projects
-                        </li>
-                        <li>
-                          <i className="icofont-tick-mark"></i>Expanded
-                          responsibilities as part of an existing role
-                        </li>
-                        <li>
-                          <i className="icofont-tick-mark"></i>Be able to create
-                          Flyers, Brochures, Advertisements
-                        </li>
-                        <li>
-                          <i className="icofont-tick-mark"></i>Find a new
-                          position involving data modeling.
-                        </li>
-                        <li>
-                          <i className="icofont-tick-mark"></i>Work with color
-                          and Gradients and Grids
-                        </li>
-                      </ul>
-                      <p>
-                        In this course take you from the fundamentals and
-                        concepts of data modeling all the way through anumber of
-                        best practices and techniques that you’ll need to build
-                        data models in your organization. You’ll find many
-                        examples that clearly the key covered the course
-                      </p>
-                      <p>
-                        By the end of the course, you’ll be all set to not only
-                        put these principles to works but also to maike the key
-                        data modeling and design decisions required by the info
-                        data modeling that transcend the nuts-and-bolts that
-                        clearly the key covered the course and design patterns.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <div dangerouslySetInnerHTML={{ __html: courseDetail.content }} />
 
                 <div className="course-video">
-                  <div className="course-video-title">
-                    <h4>Course Content</h4>
-                  </div>
                   <div className="course-video-content">
                     <div className="accordion" id="accordionExample">
                       <div className="accordion-item">
@@ -87,8 +118,7 @@ const CourseSingle = () => {
                             aria-expanded="true"
                             aria-controls="videolist1"
                           >
-                            <span>1.Introduction</span>{" "}
-                            <span>5lessons, 17:37</span>{" "}
+                            <span>Course content</span> <span>{courseDetail.videos.length} lessons</span>{' '}
                           </button>
                         </div>
                         <div
@@ -98,174 +128,11 @@ const CourseSingle = () => {
                           data-bs-parent="#accordionExample"
                         >
                           <ul className="lab-ul video-item-list">
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                1.1 Welcome to the course 02:30 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                1.2 How to set up your photoshop workspace 08:33
-                                minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                1.3 Essential Photoshop Tools 03:38 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                1.4 Finding inspiration 02:30 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                1.5 Choosing Your Format 03:48 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="accordion-item">
-                        <div className="accordion-header" id="accordion02">
-                          <button
-                            className="d-flex flex-wrap justify-content-between"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#videolist2"
-                            aria-expanded="true"
-                            aria-controls="videolist2"
-                          >
-                            {" "}
-                            <span>
-                              2.How to Create Mixed Media Art in Adobe Photoshop
-                            </span>{" "}
-                            <span>5 lessons, 52:15</span>{" "}
-                          </button>
-                        </div>
-                        <div
-                          id="videolist2"
-                          className="accordion-collapse collapse"
-                          aria-labelledby="accordion02"
-                          data-bs-parent="#accordionExample"
-                        >
-                          <ul className="lab-ul video-item-list">
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                2.1 Using Adjustment Layers 06:20 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                2.2 Building the composition 07:33 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                2.3 Photoshop Lighting effects 06:30 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                2.4 Digital Painting using photoshop brushes
-                                08:34 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
-                            <li className=" d-flex flex-wrap justify-content-between">
-                              <div className="video-item-title">
-                                2.5 Finalizing the details 10:30 minutes
-                              </div>
-                              <div className="video-item-icon">
-                                <a
-                                  href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                  className="popup"
-                                  target="_blank"
-                                >
-                                  <i className="icofont-play-alt-2"></i>
-                                </a>
-                              </div>
-                            </li>
+                            {courseDetail.videos.map((video, i) => (
+                              <li className=" d-flex flex-wrap justify-content-between">
+                                <div className="video-item-title">{`${i + 1}. ${video.title}`}</div>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -279,7 +146,66 @@ const CourseSingle = () => {
             </div>
             <div className="col-lg-4">
               <div className="sidebar-part">
-                <CourseSideDetail />
+                <div className="course-side-detail">
+                  <div className="csd-title">
+                    <div className="csdt-left">
+                      <h4 className="mb-0">
+                        <sup>$</sup>
+                        {price}
+                      </h4>
+                    </div>
+                    <div className="csdt-right">
+                      <p className="mb-0">
+                        <i className="icofont-clock-time"></i>
+                        {excenge}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="csd-content">
+                    <div className="csdc-lists">
+                      <ul className="lab-ul">
+                        {csdcList.map((val, i) => (
+                          <li key={i}>
+                            <div className="csdc-left">
+                              <i className={val.iconName}></i>
+                              {val.leftText}
+                            </div>
+                            <div className="csdc-right">{val.rightText}</div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="sidebar-social">
+                      <div className="ss-title">
+                        <h6>{shareTitle}</h6>
+                      </div>
+                      <div className="ss-content">
+                        <ul className="lab-ul">
+                          {socialList.map((val, i) => (
+                            <li key={i}>
+                              <a href={val.siteLink} className={val.className}>
+                                <i className={val.iconName}></i>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    {isEnrolled ? (
+                      <Link to={`/view-course/${courseId}`} className="course-enroll">
+                        <button className="lab-btn bg-dark">
+                          <span>View Course</span>
+                        </button>
+                      </Link>
+                    ) : (
+                      <div className="course-enroll">
+                        <Link to={`/enroll/${courseId}`} className="lab-btn">
+                          <span>{btnText}</span>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
                 <CourseSideCetagory />
               </div>
             </div>
@@ -288,7 +214,9 @@ const CourseSingle = () => {
       </div>
       <Footer />
     </Fragment>
-  );
-};
+  ) : (
+    <Loading />
+  )
+}
 
-export default CourseSingle;
+export default withBaseLogic(CourseSingle)

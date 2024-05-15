@@ -17,6 +17,10 @@ public class ContextUtilImpl implements ContextUtil {
 	}
 
 	public UserEntity loadUserFromContext() {
-		return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		try {
+			return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} catch (ClassCastException e) {
+			return null;
+		}
 	}
 }

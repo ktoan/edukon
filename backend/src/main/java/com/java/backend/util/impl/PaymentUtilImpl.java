@@ -23,7 +23,7 @@ public class PaymentUtilImpl implements PaymentUtil {
 	private final APIContext apiContext;
 
 	@Override
-	public String createPaypalPayment(Double total, String currency) {
+	public String createPaypalPayment(Double total, String currency, Integer courseId) {
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
 		amount.setTotal(String.format(Locale.forLanguageTag(currency), "%.2f", total));
@@ -45,7 +45,7 @@ public class PaymentUtilImpl implements PaymentUtil {
 
 		RedirectUrls redirectUrls = new RedirectUrls();
 		redirectUrls.setCancelUrl(frontEndUrl + "/enroll/cancel");
-		redirectUrls.setReturnUrl(frontEndUrl + "/enroll/paypal");
+		redirectUrls.setReturnUrl(frontEndUrl + "/enroll/paypal?courseId=" + courseId);
 		payment.setRedirectUrls(redirectUrls);
 		apiContext.setMaskRequestId(true);
 
@@ -65,6 +65,7 @@ public class PaymentUtilImpl implements PaymentUtil {
 	@Override
 	public boolean isExecutePaypalPayment(ExecutePaypalRequest executePaypalRequest) {
 		Payment payment = new Payment();
+		System.err.println(executePaypalRequest.getPaymentId());
 		payment.setId(executePaypalRequest.getPaymentId());
 		PaymentExecution paymentExecute = new PaymentExecution();
 		paymentExecute.setPayerId(executePaypalRequest.getPayerId());

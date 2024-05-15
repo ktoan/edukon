@@ -5,6 +5,7 @@ import com.java.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import java.util.*;
 @Table(name = "users")
 @Getter
 @Setter
+@ToString
 public class UserEntity extends AbstractEntity implements UserDetails {
 	private String email;
 	private String password;
@@ -33,6 +35,12 @@ public class UserEntity extends AbstractEntity implements UserDetails {
 	private Set<BlogEntity> blogs = new HashSet<>();
 	@OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<CourseEntity> courses = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<EnrollEntity> enrolls = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<CommentEntity> comments = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<ReviewEntity> reviews = new HashSet<>();
 
 	@Override
 	@Transient
@@ -72,5 +80,13 @@ public class UserEntity extends AbstractEntity implements UserDetails {
 
 	public void removeCourse(Integer courseId) {
 		this.courses.removeIf(course -> Objects.equals(course.getId(), courseId));
+	}
+
+	public void removeComment(Integer commentId) {
+		this.comments.removeIf(comment -> Objects.equals(comment.getId(), commentId));
+	}
+
+	public void removeReview(Integer reviewId) {
+		this.reviews.removeIf(review -> Objects.equals(review.getId(), reviewId));
 	}
 }

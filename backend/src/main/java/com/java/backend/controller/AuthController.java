@@ -30,7 +30,8 @@ public class AuthController {
 
 	@GetMapping("/load-user")
 	public ResponseEntity<Object> loadUser() {
-		return new ResponseEntity<>(Map.of("success", true, "user", userService.loadUser()), HttpStatus.OK);
+		UserDto user = userService.loadUser();
+		return new ResponseEntity<>(Map.of("success", true, "user", user), HttpStatus.OK);
 	}
 
 	@PostMapping("/register")

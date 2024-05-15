@@ -4,9 +4,11 @@ import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./slice/authSlice";
+import courseReducer from "./slice/courseSlice";
 
 const reducer = combineReducers({
   auth: authReducer,
+  course: courseReducer,
 });
 
 const persistConfig = {

@@ -1,6 +1,5 @@
 package com.java.backend.service.impl;
 
-import com.java.backend.constant.AppConstants;
 import com.java.backend.dto.CourseDto;
 import com.java.backend.entity.CategoryEntity;
 import com.java.backend.entity.CourseEntity;
@@ -54,6 +53,11 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public CourseDto getCourseById(Integer courseId) {
+		return courseMapper.toDto(findCourseEntityById(courseId));
+	}
+
+	@Override
 	public CourseDto createCourse(CourseRequest courseRequest) {
 		CourseEntity newCourse = new CourseEntity();
 		newCourse.setName(courseRequest.getName());
@@ -74,16 +78,16 @@ public class CourseServiceImpl implements CourseService {
 		if (!Objects.equals(updatedCourse.getInstructor().getId(), contextUtil.loadUserFromContext().getId())) {
 			throw new NotAccessException(messageSource.getMessage("msg.not-permission", null, Locale.ENGLISH));
 		}
-		if (StringUtils.isEmpty(courseRequest.getName())) {
+		if (!StringUtils.isEmpty(courseRequest.getName())) {
 			updatedCourse.setName(courseRequest.getName());
 		}
-		if (StringUtils.isEmpty(courseRequest.getPreDescription())) {
+		if (!StringUtils.isEmpty(courseRequest.getPreDescription())) {
 			updatedCourse.setPreDescription(courseRequest.getPreDescription());
 		}
-		if (StringUtils.isEmpty(courseRequest.getPreDescription())) {
+		if (!StringUtils.isEmpty(courseRequest.getPreDescription())) {
 			updatedCourse.setPreDescription(courseRequest.getPreDescription());
 		}
-		if (StringUtils.isEmpty(courseRequest.getContent())) {
+		if (!StringUtils.isEmpty(courseRequest.getContent())) {
 			updatedCourse.setContent(courseRequest.getContent());
 		}
 		if (courseRequest.getThumbnail() != null) {
@@ -116,7 +120,8 @@ public class CourseServiceImpl implements CourseService {
 	public CourseEntity findCourseEntityById(Integer courseId) {
 		Optional<CourseEntity> course = courseRepository.findById(courseId);
 		if (course.isEmpty()) {
-			throw new NotFoundException(messageSource.getMessage("msg.not-found", new Object[]{"Course id", courseId}, Locale.ENGLISH));
+			throw new NotFoundException(
+					messageSource.getMessage("msg.not-found", new Object[]{"Course id", courseId}, Locale.ENGLISH));
 		}
 		return course.get();
 	}

@@ -1,6 +1,7 @@
 package com.java.backend.controller;
 
 import com.java.backend.request.EnrollRequest;
+import com.java.backend.request.ExecutePaypalRequest;
 import com.java.backend.service.EnrollService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ public class EnrollController {
 	@PostMapping("/create")
 	public ResponseEntity<Object> createEnroll(@Valid @RequestBody EnrollRequest enrollRequest) {
 		return new ResponseEntity<>(Map.of("success", true, "return_url", enrollService.createPayment(enrollRequest)),
+				HttpStatus.CREATED);
+	}
+
+	@PostMapping("/execute")
+	public ResponseEntity<Object> executeEnroll(@Valid @RequestBody ExecutePaypalRequest executePaypalRequest) {
+		return new ResponseEntity<>(
+				Map.of("success", true, "is_enrolled", enrollService.isEnrollCourse("PAYPAL", executePaypalRequest)),
 				HttpStatus.CREATED);
 	}
 }

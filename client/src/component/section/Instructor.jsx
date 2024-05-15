@@ -1,43 +1,43 @@
-import { Link } from "react-router-dom";
-import Rating from "../sidebar/rating";
+import { Link } from 'react-router-dom'
+import Rating from '../sidebar/Rating'
 
-const subTitle = "World-class Instructors";
-const title = "Classes Taught By Real Creators";
+const subTitle = 'World-class Instructors'
+const title = 'Classes Taught By Real Creators'
 
 const instructorList = [
   {
-    imgUrl: "assets/images/instructor/01.jpg",
-    imgAlt: "instructor rajibraj91 rajibraj",
-    name: "Emilee Logan",
-    degi: "Master of Education Degree",
-    courseCount: "08 courses",
-    studentAnroll: "30 students",
+    imgUrl: 'assets/images/instructor/01.jpg',
+    imgAlt: 'instructor rajibraj91 rajibraj',
+    name: 'Emilee Logan',
+    degi: 'Master of Education Degree',
+    courseCount: '08 courses',
+    studentAnroll: '30 students'
   },
   {
-    imgUrl: "assets/images/instructor/02.jpg",
-    imgAlt: "instructor rajibraj91 rajibraj",
-    name: "Donald Logan",
-    degi: "Master of Education Degree",
-    courseCount: "08 courses",
-    studentAnroll: "30 students",
+    imgUrl: 'assets/images/instructor/02.jpg',
+    imgAlt: 'instructor rajibraj91 rajibraj',
+    name: 'Donald Logan',
+    degi: 'Master of Education Degree',
+    courseCount: '08 courses',
+    studentAnroll: '30 students'
   },
   {
-    imgUrl: "assets/images/instructor/03.jpg",
-    imgAlt: "instructor rajibraj91 rajibraj",
-    name: "Oliver Porter",
-    degi: "Master of Education Degree",
-    courseCount: "08 courses",
-    studentAnroll: "30 students",
+    imgUrl: 'assets/images/instructor/03.jpg',
+    imgAlt: 'instructor rajibraj91 rajibraj',
+    name: 'Oliver Porter',
+    degi: 'Master of Education Degree',
+    courseCount: '08 courses',
+    studentAnroll: '30 students'
   },
   {
-    imgUrl: "assets/images/instructor/04.jpg",
-    imgAlt: "instructor rajibraj91 rajibraj",
-    name: "Nahla Jones",
-    degi: "Master of Education Degree",
-    courseCount: "08 courses",
-    studentAnroll: "30 students",
-  },
-];
+    imgUrl: 'assets/images/instructor/04.jpg',
+    imgAlt: 'instructor rajibraj91 rajibraj',
+    name: 'Nahla Jones',
+    degi: 'Master of Education Degree',
+    courseCount: '08 courses',
+    studentAnroll: '30 students'
+  }
+]
 
 const Instructor = () => {
   return (
@@ -70,8 +70,7 @@ const Instructor = () => {
                         <i className="icofont-book-alt"></i> {val.courseCount}
                       </li>
                       <li>
-                        <i className="icofont-users-alt-3"></i>{" "}
-                        {val.studentAnroll}
+                        <i className="icofont-users-alt-3"></i> {val.studentAnroll}
                       </li>
                     </ul>
                   </div>
@@ -88,7 +87,7 @@ const Instructor = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Instructor;
+export default Instructor

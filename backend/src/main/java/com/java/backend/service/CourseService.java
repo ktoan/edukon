@@ -10,6 +10,7 @@ import java.util.List;
 public interface CourseService {
 	CourseEntity saveCourse(CourseEntity course);
 	List<CourseDto> findAllCourses(String keyword);
+	CourseDto getCourseById(Integer courseId);
 
 	CourseDto createCourse(CourseRequest courseRequest);
 

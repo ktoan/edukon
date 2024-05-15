@@ -1,9 +1,9 @@
 package com.java.backend.service.impl;
 
-import com.java.backend.constant.AppConstants;
 import com.java.backend.dto.CommentDto;
 import com.java.backend.entity.BlogEntity;
 import com.java.backend.entity.CommentEntity;
+import com.java.backend.entity.UserEntity;
 import com.java.backend.exception.NotAccessException;
 import com.java.backend.exception.NotFoundException;
 import com.java.backend.mapper.CommentMapper;
@@ -11,6 +11,7 @@ import com.java.backend.repository.CommentRepository;
 import com.java.backend.request.CommentRequest;
 import com.java.backend.service.BlogService;
 import com.java.backend.service.CommentService;
+import com.java.backend.service.UserService;
 import com.java.backend.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
 	private final ContextUtil contextUtil;
 	private final BlogService blogService;
 	private final MessageSource messageSource;
+	private final UserService userService;
 
 	@Override
 	public CommentEntity saveComment(CommentEntity comment) {
@@ -68,6 +70,9 @@ public class CommentServiceImpl implements CommentService {
 		BlogEntity blog = deletedComment.getBlog();
 		blog.removeComment(commentId);
 		blogService.saveBlog(blog);
+		UserEntity user = deletedComment.getUser();
+		user.removeComment(commentId);
+		userService.saveUser(user);
 		CommentEntity parentComment = deletedComment.getParent();
 		if (parentComment != null) {
 			parentComment.removeChildComment(commentId);
@@ -80,7 +85,8 @@ public class CommentServiceImpl implements CommentService {
 	public CommentEntity findCommentEntityById(Integer commentId) {
 		Optional<CommentEntity> comment = commentRepository.findById(commentId);
 		if (comment.isEmpty()) {
-			throw new NotFoundException(messageSource.getMessage("msg.not-found", new Object[]{"Comment id", commentId}, Locale.ENGLISH));
+			throw new NotFoundException(
+					messageSource.getMessage("msg.not-found", new Object[]{"Comment id", commentId}, Locale.ENGLISH));
 		}
 		return comment.get();
 	}

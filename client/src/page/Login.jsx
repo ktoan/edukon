@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/action/authAction";
 import { showToastError, showToastSuccess } from "../util/toastAction";
+import withBaseLogic from "../hoc/withBaseLogic";
 
 const title = "Login";
 const socialTitle = "Login With Social Media";
@@ -36,10 +37,7 @@ const socialList = [
   },
 ];
 
-const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+const Login = ({ navigate, dispatch }) => {
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -70,7 +68,6 @@ const Login = () => {
       function next() {
         clearLoginForm();
         setLoading(false);
-        showToastSuccess("Login successfully!");
       }
       function errorHandle(error) {
         setLoading(false);
@@ -162,4 +159,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withBaseLogic(Login);

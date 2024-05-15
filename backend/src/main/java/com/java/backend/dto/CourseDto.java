@@ -17,4 +17,5 @@ public class CourseDto extends AbstractDto {
 	private UserDto instructor;
 	private CategoryDto category;
 	private List<VideoDto> videos;
+	private List<ReviewDto> reviews;
 }

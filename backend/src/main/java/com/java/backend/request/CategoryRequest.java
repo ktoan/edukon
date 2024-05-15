@@ -10,7 +10,7 @@ public class CategoryRequest {
 	@Required(fieldName = "Category name")
 	@JsonProperty("name")
 	private String name;
-	@Required(message = "Thumbnail")
+	@Required(fieldName = "Thumbnail")
 	@JsonProperty("thumbnail")
 	private MultipartFile thumbnail;
 }
