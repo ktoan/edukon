@@ -8,12 +8,17 @@ import { fetchCourseDetail } from '../redux/action/courseAction'
 import { timeAgo } from '../util/dateUtils'
 import { showToastError } from '../util/toastAction'
 import { Rating } from '../component/sidebar'
+import axios from 'axios'
+import LoadingInner from '../component/section/LoadingInner.'
 
 const CourseView = ({ user }) => {
+  const [file, setFile] = useState(null)
+  const [summary, setSummary] = useState('')
   const params = useParams()
   const { courseId } = params
   const [icon, setIcon] = useState(false)
   const [courseDetail, setCourseDetail] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [videoUrl, setVideoUrl] = useState('')
 
   const videoRef = useRef(null)
@@ -40,6 +45,29 @@ const CourseView = ({ user }) => {
       fetchCourseDetail(courseId, next, errorHandle)
     }
   }, [courseId])
+
+  const onFileChange = (event) => {
+    setFile(event.target.files[0])
+  }
+
+  const onFileUpload = async () => {
+    if (!loading) {
+      setLoading(true)
+      const formData = new FormData()
+      formData.append('file', file)
+
+      await axios
+        .post('http://127.0.0.1:5000/summarize', formData)
+        .then((response) => {
+          setSummary(response.data.summary)
+        })
+        .catch((error) => {
+          setSummary('')
+          console.error('There was an error!', error)
+        })
+      setLoading(false)
+    }
+  }
 
   return courseDetail ? (
     <Fragment>
@@ -96,9 +124,18 @@ const CourseView = ({ user }) => {
                           </div>
                           <div className="mb-3">
                             <span className="text-secondary">Put the file you need to summarize</span>
-                            <input type="file" />
+                            <input type="file" className="mb-2" onChange={onFileChange} />
+                            <button disabled={loading} onClick={onFileUpload} className="lab-btn text-white fs-6">
+                              {loading ? <LoadingInner /> : `Generate`}
+                            </button>
                           </div>
-                          <textarea rows={5} className="" placeholder="Summarized text"></textarea>
+                          <textarea
+                            readOnly
+                            value={summary}
+                            rows={5}
+                            className=""
+                            placeholder="Summarized text"
+                          ></textarea>
                         </div>
                       </div>
                     </div>
