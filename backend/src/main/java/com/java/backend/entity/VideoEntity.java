@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "videos")
 @Getter
@@ -18,4 +21,6 @@ public class VideoEntity extends AbstractEntity {
 	@OneToOne(mappedBy = "video")
 	@JoinColumn(name = "assignment_id")
 	private AssignmentEntity assignment;
+	@OneToMany(mappedBy = "video", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<TrackingProgressEntity> trackingProgresses = new HashSet<>();
 }

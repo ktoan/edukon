@@ -41,6 +41,8 @@ public class UserEntity extends AbstractEntity implements UserDetails {
 	private Set<CommentEntity> comments = new HashSet<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ReviewEntity> reviews = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<TrackingProgressEntity> trackingProgresses = new HashSet<>();
 
 	@Override
 	@Transient
