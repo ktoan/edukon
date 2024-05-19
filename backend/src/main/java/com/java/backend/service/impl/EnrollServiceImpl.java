@@ -29,15 +29,6 @@ public class EnrollServiceImpl implements EnrollService {
 	private final UserService userService;
 
 	@Override
-	public boolean isUserEnrolled(Integer courseId) {
-		UserEntity user = contextUtil.loadUserFromContext();
-		if (user == null) {
-			return false;
-		}
-		return user.getEnrolls().stream().anyMatch(enroll -> Objects.equals(enroll.getCourse().getId(), courseId));
-	}
-
-	@Override
 	public EnrollEntity saveEnroll(EnrollEntity enroll) {
 		return enrollRepository.save(enroll);
 	}

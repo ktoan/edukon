@@ -25,61 +25,71 @@ const Course = () => {
         </div>
         <div className="section-wrapper">
           <div className="row g-4 justify-content-center row-cols-xl-3 row-cols-md-2 row-cols-1">
-            {courses.map((course, i) => (
-              <div className="col" key={i}>
-                <div className="course-item">
-                  <div className="course-inner">
-                    <div className="course-thumb" style={{ height: '200px' }}>
-                      <img src={course.thumbnail} alt={`${course.title} image`} />
-                    </div>
-                    <div className="course-content">
-                      <div className="course-price">{course.price}</div>
-                      <div className="course-category">
-                        <div className="course-cate">
-                          <a href="#">{course.category.name}</a>
-                        </div>
-                        <div className="course-reiew">
-                          <Rating value={calculateAverageRating(course.reviews)} />
-                          <span className="ratting-count"> {course.reviews.length} reviews</span>
-                        </div>
+            {[...courses]
+              .reverse()
+              .splice(0, 3)
+              .map((course, i) => (
+                <div className="col" key={i}>
+                  <div className="course-item">
+                    <div className="course-inner">
+                      <div className="course-thumb" style={{ height: '200px' }}>
+                        <img src={course.thumbnail} alt={`${course.title} image`} />
                       </div>
-                      <Link to="/course-single">
-                        <h4>{course.name}</h4>
-                      </Link>
-                      <div className="course-details">
-                        <div className="couse-count">
-                          <i className="icofont-video-alt"></i> {course.videos.length} lessons
+                      <div className="course-content">
+                        <div className="course-price">{course.price}</div>
+                        <div className="course-category">
+                          <div className="course-cate">
+                            <a href="#">{course.category.name}</a>
+                          </div>
+                          <div className="course-reiew">
+                            <Rating value={calculateAverageRating(course.reviews)} />
+                            <span className="ratting-count"> {course.reviews.length} reviews</span>
+                          </div>
                         </div>
-                        <div className="couse-topic">
-                          <i className="icofont-signal"></i> Online Class
+                        <Link to={course.is_enrolled ? `/view-course/${course.id}` : `/course/detail/${course.id}`}>
+                          <h4>{course.name}</h4>
+                        </Link>
+                        <div className="course-details">
+                          <div className="couse-count">
+                            <i className="icofont-video-alt"></i> {course.videos.length} lessons
+                          </div>
+                          <div className="couse-topic">
+                            <i className="icofont-signal"></i> Online Class
+                          </div>
                         </div>
-                      </div>
-                      <div className="course-footer">
-                        <div className="course-author">
-                          <img
-                            src={
-                              course.instructor.gender === 'MALE'
-                                ? 'assets/images/course/author/05.jpg'
-                                : 'assets/images/course/author/06.jpg'
-                            }
-                            alt={`Course img`}
-                          />
-                          <Link to="/team-single" className="ca-name">
-                            {course.instructor.name}
-                          </Link>
-                        </div>
-                        <div className="course-btn">
-                          <Link to={`/course/detail/${course.id}`} className="lab-btn-text">
-                            Know more
-                            <i className="icofont-external-link"></i>
-                          </Link>
+                        <div className="course-footer">
+                          <div className="course-author">
+                            <img
+                              src={
+                                course.instructor.gender === 'MALE'
+                                  ? 'assets/images/course/author/05.jpg'
+                                  : 'assets/images/course/author/06.jpg'
+                              }
+                              alt={`Course img`}
+                            />
+                            <Link to="/team-single" className="ca-name">
+                              {course.instructor.name}
+                            </Link>
+                          </div>
+                          <div className="course-btn">
+                            <Link
+                              to={course.is_enrolled ? `/view-course/${course.id}` : `/course/detail/${course.id}`}
+                              className={`${course.is_enrolled && `text-primary`} lab-btn-text`}
+                            >
+                              {course.is_enrolled ? <>View course</> : <>Know more</>}
+                              <i
+                                className={`${
+                                  course.is_enrolled ? `icofont-video text-primary` : `icofont-external-link`
+                                }`}
+                              ></i>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

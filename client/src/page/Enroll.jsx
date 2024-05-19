@@ -12,12 +12,10 @@ const Enroll = ({ user, requiredLogin }) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const { courseId } = params
-  const [isEnrolled, setEnrolled] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('PAYPAL')
   useEffect(() => {
     if (courseId) {
-      function next(courseDetail, isEnrolled) {
-        setEnrolled(isEnrolled)
+      function next(courseDetail) {
         setCourseDetail(courseDetail)
       }
       function errorHandle(message) {

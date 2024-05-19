@@ -17,7 +17,7 @@ export const fetchCourseDetail = async (courseId, next = () => {}, errorHandle =
   try {
     const res = await axios.get(`${API_ROUTES.courseDetail}?courseId=${courseId}`)
     if (res.data.success) {
-      next(res.data.course, res.data.is_enrolled)
+      next(res.data.course)
     }
   } catch (error) {
     errorHandle(error.response ? error.response.msg : error.message)

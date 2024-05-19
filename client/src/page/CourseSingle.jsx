@@ -2,8 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Footer, Header, PageHeader } from '../component/layout'
 import Loading from '../component/section/Loading'
-import { Review } from '../component/sidebar'
-import Author from '../component/sidebar/author'
+import { Rating } from '../component/sidebar'
 import CourseSideCetagory from '../component/sidebar/course-cetagory'
 import Respond from '../component/sidebar/respond'
 import withBaseLogic from '../hoc/withBaseLogic'
@@ -80,12 +79,10 @@ const CourseSingle = () => {
   const [courseDetail, setCourseDetail] = useState(null)
   const params = useParams()
   const { courseId } = params
-  const [isEnrolled, setEnrolled] = useState(false)
 
   useEffect(() => {
     if (courseId) {
-      function next(courseDetail, isEnrolled) {
-        setEnrolled(isEnrolled)
+      function next(courseDetail) {
         setCourseDetail(courseDetail)
       }
       function errorHandle(message) {
@@ -139,9 +136,49 @@ const CourseSingle = () => {
                     </div>
                   </div>
                 </div>
-                <Author />
-                <Review />
-                <Respond />
+                <div className="authors">
+                  <div className="author-thumb">
+                    <img src={require('../assets/images/author/01.jpg')} alt="rajibraj91" />
+                  </div>
+                  <div className="author-content">
+                    <h5>{courseDetail.instructor.name}</h5>
+                    <span>Teacher</span>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, cupiditate!</p>
+                    <ul className="lab-ul social-icons">
+                      {socialList.map((val, i) => (
+                        <li key={i}>
+                          <a href={val.link} className={val.className}>
+                            <i className={val.iconName}></i>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="comments">
+                  <h4 className="title-border">{courseDetail.reviews.length} reviews</h4>
+                  <ul className="comment-list">
+                    {courseDetail.reviews.map((r, i) => (
+                      <li className="comment" key={i}>
+                        <div className="com-thumb">
+                          <img src={require('../assets/images/author/03.jpg')} alt={r.user.name} />
+                        </div>
+                        <div className="com-content">
+                          ``
+                          <div className="com-title">
+                            <div className="com-title-meta">
+                              <h6>{r.user.name}</h6>
+                              <span> {r.createdAt.split('T')[0]} </span>
+                            </div>
+                            <Rating value={r.rating} />
+                          </div>
+                          <p>{r.comment}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {courseDetail.is_enrolled && <Respond />}
               </div>
             </div>
             <div className="col-lg-4">
@@ -191,7 +228,7 @@ const CourseSingle = () => {
                         </ul>
                       </div>
                     </div>
-                    {isEnrolled ? (
+                    {courseDetail.is_enrolled ? (
                       <Link to={`/view-course/${courseId}`} className="course-enroll">
                         <button className="lab-btn bg-dark">
                           <span>View Course</span>

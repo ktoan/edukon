@@ -1,5 +1,6 @@
 package com.java.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +14,10 @@ public class CourseDto extends AbstractDto {
 	private String content;
 	private String thumbnail;
 	private double price;
-	private boolean isApproved;
 	private UserDto instructor;
 	private CategoryDto category;
 	private List<VideoDto> videos;
 	private List<ReviewDto> reviews;
+	@JsonProperty("is_enrolled")
+	private boolean isEnrolled = false;
 }

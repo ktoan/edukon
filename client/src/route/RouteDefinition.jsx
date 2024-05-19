@@ -4,6 +4,7 @@ import { ScrollToTop } from '../component/layout'
 import {
   AboutPage,
   BlogPage,
+  BlogSingle,
   ContactPage,
   CoursePage,
   CourseSinglePage,
@@ -33,6 +34,7 @@ const RouteDefinition = () => {
         <Route path="/enroll/:courseId" element={<EnrollPage />} />
         <Route path="/enroll/paypal" element={<EnrollPaypalPage />} />
         <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/detail" element={<BlogSingle />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route element={<ProtectAuthenticatedRoute />}>

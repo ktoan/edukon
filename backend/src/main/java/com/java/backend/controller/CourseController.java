@@ -3,7 +3,6 @@ package com.java.backend.controller;
 import com.java.backend.dto.CourseDto;
 import com.java.backend.request.CourseRequest;
 import com.java.backend.service.CourseService;
-import com.java.backend.service.EnrollService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.util.Map;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class CourseController {
 	private final CourseService courseService;
-	private final EnrollService enrollService;
 
 	@GetMapping("")
 	public ResponseEntity<Object> findAllBlogs(@RequestParam(required = false) String keyword) {
@@ -32,7 +30,7 @@ public class CourseController {
 	public ResponseEntity<Object> getDetailsCourse(@RequestParam Integer courseId) {
 		CourseDto course = courseService.getCourseById(courseId);
 		return new ResponseEntity<>(
-				Map.of("success", true, "course", course, "is_enrolled", enrollService.isUserEnrolled(courseId)),
+				Map.of("success", true, "course", course),
 				HttpStatus.OK);
 	}
 

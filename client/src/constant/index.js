@@ -11,5 +11,7 @@ export const API_ROUTES = {
   courseDetail: BASE + '/course/detail',
   // Enroll
   createPayment: BASE + '/enroll/create',
-  executePayment: BASE + '/enroll/execute'
+  executePayment: BASE + '/enroll/execute',
+  // blog
+  blogs: BASE + '/blog'
 }

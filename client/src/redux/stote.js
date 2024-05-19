@@ -1,35 +1,37 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
-import persistReducer from "redux-persist/es/persistReducer";
-import persistStore from "redux-persist/es/persistStore";
-import storage from "redux-persist/lib/storage";
-import authReducer from "./slice/authSlice";
-import courseReducer from "./slice/courseSlice";
+import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers } from 'redux'
+import persistReducer from 'redux-persist/es/persistReducer'
+import persistStore from 'redux-persist/es/persistStore'
+import storage from 'redux-persist/lib/storage'
+import authReducer from './slice/authSlice'
+import courseReducer from './slice/courseSlice'
+import blogReducer from './slice/blogSlice'
 
 const reducer = combineReducers({
   auth: authReducer,
   course: courseReducer,
-});
+  blog: blogReducer
+})
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  whitelist: ["auth"],
-};
+  whitelist: ['auth']
+}
 
-const persistRdc = persistReducer(persistConfig, reducer);
+const persistRdc = persistReducer(persistConfig, reducer)
 
 const store = configureStore({
   reducer: persistRdc,
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
+      serializableCheck: false
+    })
+})
 
-const persistor = persistStore(store);
+const persistor = persistStore(store)
 
-const Store = { store, persistor };
+const Store = { store, persistor }
 
-export default Store;
+export default Store

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Footer, Header, PageHeader } from '../component/layout'
 import Loading from '../component/section/Loading'
 import withBaseLogic from '../hoc/withBaseLogic'
@@ -17,6 +17,7 @@ const CourseView = ({ user }) => {
   const [videoUrl, setVideoUrl] = useState('')
 
   const videoRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (videoRef.current) {
@@ -40,6 +41,12 @@ const CourseView = ({ user }) => {
       fetchCourseDetail(courseId, next, errorHandle)
     }
   }, [courseId])
+
+  useEffect(() => {
+    if (courseDetail && !courseDetail.is_enrolled) {
+      navigate('/error')
+    }
+  }, [courseDetail])
 
   return courseDetail ? (
     <Fragment>
@@ -166,179 +173,6 @@ const CourseView = ({ user }) => {
                             </ul>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="overview-announce-section padding-tb">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="course-view-bottom">
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                  <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="overview-tab"
-                      data-bs-toggle="tab"
-                      href="#overview"
-                      role="tab"
-                      aria-controls="overview"
-                      aria-selected="true"
-                    >
-                      Overview
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="announcement-tab"
-                      data-bs-toggle="tab"
-                      href="#announcement"
-                      role="tab"
-                      aria-controls="announcement"
-                      aria-selected="false"
-                    >
-                      Announcement
-                    </a>
-                  </li>
-                </ul>
-                <div className="tab-content" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="overview"
-                    role="tabpanel"
-                    aria-labelledby="overview-tab"
-                  >
-                    <div className="overview-area">
-                      <div className="overview-head mb-4">
-                        <h6 className="mb-0">About this course</h6>
-                        <p>{courseDetail.preDescription}</p>
-                      </div>
-                      <div className="overview-body">
-                        <ul className="lab-ul">
-                          <li className="d-flex flex-wrap">
-                            <div className="overview-left">
-                              <p className="mb-0">By the numbers</p>
-                            </div>
-                            <div className="overview-right">
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Skill level</div>
-                                <div className="or-right">Beginner Leve</div>
-                              </div>
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Students</div>
-                                <div className="or-right">17118</div>
-                              </div>
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Languages</div>
-                                <div className="or-right">English</div>
-                              </div>
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Captions</div>
-                                <div className="or-right">Yes</div>
-                              </div>
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Lectures</div>
-                                <div className="or-right">31</div>
-                              </div>
-                              <div className="or-items d-flex flex-wrap">
-                                <div className="or-left mr-3">Video</div>
-                                <div className="or-right">1 total hour</div>
-                              </div>
-                            </div>
-                          </li>
-                          <li className="d-flex flex-wrap">
-                            <div className="overview-left">
-                              <p className="mb-0">Features</p>
-                            </div>
-                            <div className="overview-right">
-                              <p className="catagory mb-0">Standard Website Design</p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="tab-pane" id="announcement" role="tabpanel" aria-labelledby="announcement-tab">
-                    <div className="announcement-area">
-                      <div className="announcement-lists">
-                        <ul className="lab-ul">
-                          <li>
-                            <div className="administer-post d-flex flex-wrap">
-                              <div className="ap-top mb-2">
-                                <div className="ap-items d-flex flex-wrap">
-                                  <div className="ap-thumb">
-                                    <img src={courseDetail.instructor.avatar} alt="administer" />
-                                  </div>
-                                  <div className="ap-content">
-                                    <h5>{courseDetail.instructor.name}</h5>
-                                    <p>{courseDetail.instructor.email}</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="ap-bottom">
-                                <h4>The best way to study animation is practice!</h4>
-                                <p>
-                                  I want to clarify some details right away: This course was created for the training
-                                  unit of the General-Animation studio. Every new candidate who wants to become a member
-                                  of our studio, we send to this course so that he can quickly and efficiently become
-                                  familiar with our methods of work.
-                                </p>
-                                <p>
-                                  Many members of our community live in developing countries and have access only to the
-                                  simplest computers. Taking into account the needs of such students, during training we
-                                  use the Adobe After Effects of 7.0 version, which does not require high-performance
-                                  hardware, but at the same time allows to master the basic principles of working with
-                                  the program
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="student-reviwe d-flex flex-wrap">
-                              <div className="student-thumb">
-                                <img src={user.avatar} alt="annaunce" />
-                              </div>
-                              <div className="student-content">
-                                <form action="" className="d-flex" method="post">
-                                  <textarea
-                                    name="meassage"
-                                    id="meassage"
-                                    cols="30"
-                                    rows="1"
-                                    placeholder="Enter Your Comment"
-                                  ></textarea>
-                                  <button className="lab-btn text-white">Submit</button>
-                                </form>
-                              </div>
-                            </div>
-                          </li>
-                          {courseDetail?.reviews
-                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                            .map((review, i) => (
-                              <li key={i}>
-                                <div className="student-reviwe d-flex flex-wrap">
-                                  <div className="student-thumb">
-                                    <img src={review.user.avatar} alt="review" />
-                                  </div>
-                                  <div className="student-content">
-                                    <h6>
-                                      {review.user.name} <span>{timeAgo(review.createdAt)}</span>
-                                    </h6>
-                                    <Rating value={review.rating} />
-                                    <p>{review.comment}</p>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                        </ul>
                       </div>
                     </div>
                   </div>
