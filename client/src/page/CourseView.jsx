@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Footer, Header, PageHeader } from '../component/layout'
@@ -18,6 +17,7 @@ const CourseView = ({ user }) => {
   const [courseDetail, setCourseDetail] = useState(null)
   const [loading, setLoading] = useState(false)
   const [videoUrl, setVideoUrl] = useState('')
+  const [videoDurations, setVideoDurations] = useState({})
 
   const videoRef = useRef(null)
   const navigate = useNavigate()
@@ -28,6 +28,12 @@ const CourseView = ({ user }) => {
       videoRef.current.pause()
     }
   }, [videoUrl])
+
+  useEffect(() => {
+    if (courseDetail != null) {
+      console.log(courseDetail)
+    }
+  }, [courseDetail])
 
   useEffect(() => {
     if (courseId) {
@@ -45,11 +51,6 @@ const CourseView = ({ user }) => {
     }
   }, [courseId])
 
-  useEffect(() => {
-    if (courseDetail && !courseDetail.is_enrolled) {
-      navigate('/error')
-    }
-  }, [courseDetail])
   const onFileChange = (event) => {
     setFile(event.target.files[0])
   }
@@ -71,6 +72,22 @@ const CourseView = ({ user }) => {
         })
       setLoading(false)
     }
+  }
+
+  const handleLoadedMetadata = (videoId) => {
+    const videoElement = document.getElementById(videoId)
+    if (videoElement) {
+      setVideoDurations((prevDurations) => ({
+        ...prevDurations,
+        [videoId]: videoElement.duration
+      }))
+    }
+  }
+
+  const formatDuration = (duration) => {
+    const minutes = Math.floor(duration / 60)
+    const seconds = Math.floor(duration % 60)
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
   }
 
   return courseDetail ? (
@@ -157,45 +174,40 @@ const CourseView = ({ user }) => {
                               <li>
                                 <div id="accordion">
                                   {courseDetail.videos.map((video, i) => (
-                                    <div key={i} className="card active bg-ash mb-1">
+                                    <div key={i} className="card bg-ash mb-1">
                                       <div className="card-header bg-transparent border-bottom-0" id="acc-list-1">
                                         <h5 className="mb-0">
                                           <button
-                                            className={`${
-                                              videoUrl === video.source && `text-primary`
-                                            } w-100 border-0 bg-transparent outline-none text-left`}
+                                            className={`w-100 border-0 bg-transparent outline-none text-left`}
                                             data-bs-toggle="collapse"
-                                            data-bs-target={`#acc-${i + 1}`}
-                                            aria-expanded="true"
-                                            aria-controls={`acc-${i + 1}`}
                                           >
                                             Lesson {i + 1}: {video.title}
                                           </button>
                                         </h5>
                                       </div>
-                                      <div
-                                        onClick={() => setVideoUrl(video.source)}
-                                        id={`acc-${i + 1}`}
-                                        className="collapse show"
-                                        aria-labelledby={`acc-list-${i + 1}`}
-                                        data-bs-parent="#accordion"
-                                      >
+                                      <div onClick={() => setVideoUrl(video.source)} className="collapse show">
                                         <div className="card-body py-0">
-                                          <div
-                                            className={`${
-                                              videoUrl === video.source && `text-primary`
-                                            } course-lists d-flex flex-wrap justify-content-between`}
-                                          >
+                                          <div className="course-lists d-flex flex-wrap justify-content-between">
                                             <div className="csa-left">
-                                              {/* <i className="icofont-checked complite"></i> */}
-                                              <i className="icofont-checked"></i>
-                                              <h6 className={`${videoUrl === video.source && `text-primary`}`}>
-                                                1.1 Introduction
-                                              </h6>
-                                              <p className={`${videoUrl === video.source && `text-primary`}`}>
+                                              <i
+                                                className={`${
+                                                  video.tracked ? `icofont-check-circled text-success` : `icofont-lock`
+                                                }`}
+                                              ></i>
+                                              <h6>{video.title}</h6>
+                                              <p>
                                                 <i className="icofont-play-alt-2"></i>
-                                                6:00 Min
+                                                {videoDurations[`video-${i}`]
+                                                  ? formatDuration(videoDurations[`video-${i}`])
+                                                  : 'Loading...'}
                                               </p>
+                                              <video
+                                                id={`video-${i}`}
+                                                onLoadedMetadata={() => handleLoadedMetadata(`video-${i}`)}
+                                                style={{ display: 'none' }}
+                                              >
+                                                <source src={video.source} type="video/mp4" />
+                                              </video>
                                             </div>
                                           </div>
                                         </div>

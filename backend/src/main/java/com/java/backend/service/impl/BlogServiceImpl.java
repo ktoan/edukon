@@ -109,4 +109,9 @@ public class BlogServiceImpl implements BlogService {
 		}
 		return blog.get();
 	}
+
+	@Override
+	public BlogDto getBlogById(Integer blogId) {
+		return blogMapper.toDto(findBlogEntityById(blogId));
+	}
 }

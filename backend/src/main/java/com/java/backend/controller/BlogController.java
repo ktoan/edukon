@@ -17,29 +17,35 @@ import java.util.Map;
 @RequiredArgsConstructor
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class BlogController {
-    private final BlogService blogService;
+	private final BlogService blogService;
 
-    @GetMapping("")
-    public ResponseEntity<Object> findAllBlogs(@RequestParam(required = false) String keyword) {
-        List<BlogDto> blogs = blogService.findAllBlogs(keyword);
-        return new ResponseEntity<>(Map.of("success", true, "blogs", blogs), HttpStatus.OK);
-    }
+	@GetMapping("")
+	public ResponseEntity<Object> findAllBlogs(@RequestParam(required = false) String keyword) {
+		List<BlogDto> blogs = blogService.findAllBlogs(keyword);
+		return new ResponseEntity<>(Map.of("success", true, "blogs", blogs), HttpStatus.OK);
+	}
 
-    @PostMapping("/create")
-    public ResponseEntity<Object> createBlog(@Valid @ModelAttribute BlogRequest blogRequest) {
-        BlogDto newBlog = blogService.createBlog(blogRequest);
-        return new ResponseEntity<>(Map.of("success", true, "new_blog", newBlog), HttpStatus.CREATED);
-    }
+	@GetMapping("/detail")
+	public ResponseEntity<Object> getDetailsBlog(@RequestParam Integer blogId) {
+		BlogDto blog = blogService.getBlogById(blogId);
+		return new ResponseEntity<>(Map.of("success", true, "blog", blog), HttpStatus.OK);
+	}
 
-    @PutMapping("/update")
-    public ResponseEntity<Object> updateBlog(@RequestParam Integer blogId, @ModelAttribute BlogRequest blogRequest) {
-        BlogDto updatedBlog = blogService.updateBlog(blogId, blogRequest);
-        return new ResponseEntity<>(Map.of("success", true, "updated_blog", updatedBlog), HttpStatus.OK);
-    }
+	@PostMapping("/create")
+	public ResponseEntity<Object> createBlog(@Valid @ModelAttribute BlogRequest blogRequest) {
+		BlogDto newBlog = blogService.createBlog(blogRequest);
+		return new ResponseEntity<>(Map.of("success", true, "new_blog", newBlog), HttpStatus.CREATED);
+	}
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteBlog(@RequestParam Integer blogId) {
-        blogService.deleteBlog(blogId);
-        return new ResponseEntity<>(Map.of("success", true, "message", "Blog deleted successfully!"), HttpStatus.OK);
-    }
+	@PutMapping("/update")
+	public ResponseEntity<Object> updateBlog(@RequestParam Integer blogId, @ModelAttribute BlogRequest blogRequest) {
+		BlogDto updatedBlog = blogService.updateBlog(blogId, blogRequest);
+		return new ResponseEntity<>(Map.of("success", true, "updated_blog", updatedBlog), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity<Object> deleteBlog(@RequestParam Integer blogId) {
+		blogService.deleteBlog(blogId);
+		return new ResponseEntity<>(Map.of("success", true, "message", "Blog deleted successfully!"), HttpStatus.OK);
+	}
 }

@@ -1,6 +1,7 @@
 package com.java.backend.util.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.java.backend.exception.InternalServerException;
 import com.java.backend.util.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,17 @@ public class FileUtilImpl implements FileUtil {
 			File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + multipartFile.getOriginalFilename());
 			multipartFile.transferTo(convFile);
 			Map uploadResult = cloudinary.uploader().upload(convFile, params);
+			return uploadResult.get("url").toString();
+		} catch (IOException e) {
+			throw new InternalServerException(e.getMessage());
+		}
+	}
+
+	public String uploadFile(MultipartFile file, String folder) {
+		try {
+			Map uploadResult = cloudinary.uploader()
+					.upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto", "folder",
+							folder != null ? "edukon/" + folder : "edukon/documents"));
 			return uploadResult.get("url").toString();
 		} catch (IOException e) {
 			throw new InternalServerException(e.getMessage());

@@ -9,6 +9,7 @@ import java.util.List;
 public interface BlogService {
     BlogEntity saveBlog(BlogEntity blog);
     List<BlogDto> findAllBlogs(String keyword);
+    BlogDto getBlogById(Integer blogId);
 
     BlogDto createBlog(BlogRequest blogRequest);
 

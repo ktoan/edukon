@@ -31,12 +31,12 @@ const Blog = ({ dispatch }) => {
                   <div className="post-item">
                     <div className="post-inner">
                       <div className="post-thumb">
-                        <Link to="/blog-single">
+                        <Link to={`/blog/detail/${blog.id}`}>
                           <img src={blog.thumbnail} alt={blog.title} />
                         </Link>
                       </div>
                       <div className="post-content">
-                        <Link to="/blog-single">
+                        <Link to={`/blog/detail/${blog.id}`}>
                           <h4>{blog.title}</h4>
                         </Link>
                         <div className="meta-post">
@@ -55,12 +55,12 @@ const Blog = ({ dispatch }) => {
                       </div>
                       <div className="post-footer">
                         <div className="pf-left">
-                          <Link to="/blog-single" className="lab-btn-text">
+                          <Link to={`/blog/detail/${blog.id}`} className="lab-btn-text">
                             Read more <i className="icofont-external-link"></i>
                           </Link>
                         </div>
                         <div className="pf-right">
-                          <i className="icofont-comment"></i>
+                          <i className="icofont-commentt"></i>
                           <span className="comment-count">{blog.comments.length} Comments</span>
                         </div>
                       </div>

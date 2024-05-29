@@ -7,4 +7,6 @@ public interface FileUtil {
 	String uploadImage(MultipartFile multipartFile, String folder);
 
 	String uploadVideo(MultipartFile multipartFile, String folder);
+
+	String uploadFile(MultipartFile multipartFile, String folder);
 }

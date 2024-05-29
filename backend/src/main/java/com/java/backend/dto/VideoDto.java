@@ -10,4 +10,6 @@ public class VideoDto extends AbstractDto {
 	private String preDescription;
 	private String source;
 	private VideoDto video;
+	private boolean isTracked;
+	private AssignmentDto assignmentDto;
 }

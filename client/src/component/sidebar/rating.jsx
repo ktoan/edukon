@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Rating = ({ value = 0 }) => {
-  // Create an array with 5 elements [0, 1, 2, 3, 4]
+const Rating = ({ value = 0, editable = false, onChange }) => {
   const totalStars = 5
+  const [rating, setRating] = useState(value)
+
+  const handleRating = (index) => {
+    if (!editable) return // Prevent updating if not editable
+    setRating(index + 1) // Update the rating state
+    if (onChange) onChange(index + 1) // Propagate the change up if onChange handler is provided
+  }
 
   return (
-    <span className="ratting">
-      {[...Array(totalStars)].map((star, index) => (
+    <span className="rating">
+      {[...Array(totalStars)].map((_, index) => (
         <i
           key={index}
           className="icofont-ui-rating"
-          style={{ color: index < value ? '#f16126' : '#ccc' }} // Color the star if its index is less than the value
+          style={{ cursor: editable ? 'pointer' : 'default', color: index < rating ? '#f16126' : '#ccc' }}
+          onClick={() => handleRating(index)}
         ></i>
       ))}
     </span>

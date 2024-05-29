@@ -4,10 +4,9 @@ import { Footer, Header, PageHeader } from '../component/layout'
 import Loading from '../component/section/Loading'
 import { Rating } from '../component/sidebar'
 import CourseSideCetagory from '../component/sidebar/course-cetagory'
-import Respond from '../component/sidebar/respond'
 import withBaseLogic from '../hoc/withBaseLogic'
-import { fetchCourseDetail } from '../redux/action/courseAction'
-import { showToastError } from '../util/toastAction'
+import { fetchCourseDetail, postReview } from '../redux/action/courseAction'
+import { showToastError, showToastSuccess } from '../util/toastAction'
 
 const price = '89'
 const excenge = 'Limited time offer'
@@ -75,8 +74,11 @@ const socialList = [
   }
 ]
 
-const CourseSingle = () => {
+const CourseSingle = ({ user }) => {
   const [courseDetail, setCourseDetail] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [rating, setRating] = useState(0)
+  const [comment, setComment] = useState('')
   const params = useParams()
   const { courseId } = params
 
@@ -91,6 +93,35 @@ const CourseSingle = () => {
       fetchCourseDetail(courseId, next, errorHandle)
     }
   }, [courseId])
+
+  const submitReview = () => {
+    if (loading) return
+    const form = { rating, comment, course_id: courseId }
+    setLoading(true)
+    function next(newReview) {
+      setCourseDetail((prevCourseDetail) => {
+        // Create a new array with the existing reviews and the new review
+        const updatedReviews = [...prevCourseDetail.reviews, newReview]
+        // Return a new object for the course detail with the updated reviews array
+        return {
+          ...prevCourseDetail,
+          reviews: updatedReviews
+        }
+      })
+      clearForm()
+      showToastSuccess('Create review successfully!')
+    }
+    function errorHandle(message) {
+      showToastError(message)
+    }
+    postReview(form, next, errorHandle)
+    setLoading(false)
+  }
+
+  function clearForm() {
+    setComment('')
+    setRating(0)
+  }
 
   return courseDetail ? (
     <Fragment>
@@ -126,7 +157,7 @@ const CourseSingle = () => {
                         >
                           <ul className="lab-ul video-item-list">
                             {courseDetail.videos.map((video, i) => (
-                              <li className=" d-flex flex-wrap justify-content-between">
+                              <li key={i} className=" d-flex flex-wrap justify-content-between">
                                 <div className="video-item-title">{`${i + 1}. ${video.title}`}</div>
                               </li>
                             ))}
@@ -164,7 +195,6 @@ const CourseSingle = () => {
                           <img src={require('../assets/images/author/03.jpg')} alt={r.user.name} />
                         </div>
                         <div className="com-content">
-                          ``
                           <div className="com-title">
                             <div className="com-title-meta">
                               <h6>{r.user.name}</h6>
@@ -178,7 +208,30 @@ const CourseSingle = () => {
                     ))}
                   </ul>
                 </div>
-                {courseDetail.is_enrolled && <Respond />}
+                {courseDetail.is_enrolled && (
+                  <div id="respond" className="comment-respond mb-lg-0">
+                    <h4 className="title-border">Leave a review</h4>
+                    <div className="add-comment">
+                      <div id="commentform" className="comment-form">
+                        <p>{user.name}</p>
+                        <div className="mb-2">
+                          <Rating editable value={rating} onChange={setRating} />
+                        </div>
+                        <textarea
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          rows="7"
+                          type="text"
+                          name="message"
+                          placeholder="Your Comment"
+                        ></textarea>
+                        <button onClick={() => submitReview()} type="submit" className="lab-btn">
+                          <span>Submit</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="col-lg-4">

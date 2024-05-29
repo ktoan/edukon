@@ -38,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 email = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException | ExpiredJwtException e) {
                 // Write log here
+                System.err.println(e);
             }
         }
 

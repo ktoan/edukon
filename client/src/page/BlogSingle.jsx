@@ -1,14 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Footer, Header, PageHeader } from '../component/layout'
-import { Review } from '../component/sidebar'
+import Loading from '../component/section/Loading'
 import Archive from '../component/sidebar/archive'
-import Author from '../component/sidebar/author'
 import Instagram from '../component/sidebar/instagram'
 import PopularPost from '../component/sidebar/popular-post'
 import PostCategory from '../component/sidebar/post-category'
-import Respond from '../component/sidebar/respond'
 import Search from '../component/sidebar/search'
 import Tags from '../component/sidebar/tags'
+import withBaseLogic from '../hoc/withBaseLogic'
+import { fetchBlogDetail } from '../redux/action/blogAction'
+import { showToastError } from '../util/toastAction'
 
 const socialList = [
   {
@@ -39,10 +41,26 @@ const socialList = [
 ]
 
 const BlogSingle = () => {
-  return (
+  const [blogDetail, setBlogDetail] = useState(null)
+  const params = useParams()
+  const { blogId } = params
+
+  useEffect(() => {
+    if (blogId) {
+      function next(blogDetail) {
+        setBlogDetail(blogDetail)
+      }
+      function errorHandle(message) {
+        showToastError(message)
+      }
+      fetchBlogDetail(blogId, next, errorHandle)
+    }
+  }, [blogId])
+
+  return blogDetail ? (
     <Fragment>
       <Header />
-      <PageHeader title={'Interactively Morph High Standards Anding'} curPage={'Blog Detais'} />
+      <PageHeader title={blogDetail.title} curPage={'Blog Detais'} />
       <div className="blog-section blog-single padding-tb section-bg">
         <div className="container">
           <div className="row justify-content-center">
@@ -54,96 +72,32 @@ const BlogSingle = () => {
                       <div className="post-item style-2">
                         <div className="post-inner">
                           <div className="post-thumb">
-                            <img
-                              src={require('../assets/images/blog/single/01.jpg')}
-                              alt="blog thumb rajibraj91"
-                              className="w-100"
-                            />
+                            <img src={blogDetail.thumbnail} alt="blog thumb rajibraj91" className="w-100" />
                           </div>
                           <div className="post-content">
-                            <h2>Interactively Morph High Standards Anding</h2>
+                            <h2>{blogDetail.title}</h2>
                             <div className="meta-post">
                               <ul className="lab-ul">
                                 <li>
                                   <a href="#">
-                                    <i className="icofont-calendar"></i>April 23,2021
+                                    <i className="icofont-calendar"></i> {blogDetail.createdAt.split('T')[0]}
                                   </a>
                                 </li>
                                 <li>
                                   <a href="#">
-                                    <i className="icofont-ui-user"></i>Rajib Raj
+                                    <i className="icofont-ui-user"></i>
+                                    {blogDetail.author.name}
                                   </a>
                                 </li>
                                 <li>
                                   <a href="#">
                                     <i className="icofont-speech-comments"></i>
-                                    09 Comments
+                                    {blogDetail.comments.length} Comments
                                   </a>
                                 </li>
                               </ul>
                             </div>
-                            <p>
-                              Serenity hasir taken poseson mying entre soung these sweet morngs sprng whch enoywith
-                              whole heart create am alones and feel the charm of exstenceth spot whch the blissouls like
-                              mineing am soo happy my dearsi frend absoribed the exquste sense enjoy my whole hearts
-                              alone and fee the charm of exstenceths spotsi whch was the blis of soulis mineing amsoing
-                              dear frend soingu absoribed the exqust sense tranqui existence neglect my talentsr should
-                              ncapable ofing is drawng singe wonderful serenty has taken possesison of my entre soulng
-                              these sweet present moment and yet feel that never was greater artst
-                            </p>
-
-                            <blockquote>
-                              <p>
-                                Dynamically recaptiualize distributed technologies is wherease turnkey channels and
-                                onotonectally provide access to resource leveling expertise vias worldwide deliverables
-                                uolisticly extend aserser are diverse vortals.{' '}
-                              </p>
-                              <cite>
-                                <a href="#">...Melissa Hunter</a>
-                              </cite>
-                            </blockquote>
-
-                            <p>
-                              whole heart create am alones and feel the charm of exstenceth spot whch the blissouls like
-                              mineing am soo happy my dearsi frend absoribed the exquste sense enjoy my whole hearts
-                              alone and fee the charm of exstenceths spotsi whch was the blis of soulis mineing amsoing
-                              dear frend soingu absoribed the exqust sense tranqui existence neglect my talentsr should
-                              ncapable ofing is drawng singe wonderful serenty has taken possesison of my entre soulng
-                              these sweet present moment and yet feel that never was greater artst
-                            </p>
-
-                            <img src="assets/images/blog/single/02.jpg" alt="rajibraj91" />
-
-                            <p>
-                              Serenity hasir taken poseson mying entre soung these sweet morngs sprng whch enoywith
-                              whole heart create am alones and feel the charm of exstenceth spot whch the blissouls like
-                              mineing am soo happy my dearsi frend absoribed the exquste sense enjoy my whole hearts
-                              alone and fee the charm of exstenceths spotsi whch was the blis of soulis mineing amsoing
-                              dear frend soingu absoribed the exqust sense tranqui existence neglect my talentsr should
-                              ncapable ofing is drawng singe wonderful serenty has taken possesison of my entre soulng
-                              these sweet present moment and yet feel that never was greater artst
-                            </p>
-
-                            <div className="video-thumb">
-                              <img src="assets/images/blog/single/03.jpg" alt="video" />
-                              <a
-                                href="https://www.youtube-nocookie.com/embed/jP649ZHA8Tg"
-                                className="video-button popup"
-                                target="_blank"
-                              >
-                                <i className="icofont-ui-play"></i>
-                              </a>
-                            </div>
-
-                            <p>
-                              whole heart create am alones and feel the charm of exstenceth spot whch the blissouls like
-                              mineing am soo happy my dearsi frend absoribed the exquste sense enjoy my whole hearts
-                              alone and fee the charm of exstenceths spotsi whch was the blis of soulis mineing amsoing
-                              dear frend soingu absoribed the exqust sense tranqui existence neglect my talentsr should
-                              ncapable ofing is drawng singe wonderful serenty has taken possesison of my entre soulng
-                              these sweet present moment and yet feel that never was greater artst
-                            </p>
-
+                            <div dangerouslySetInnerHTML={{ __html: blogDetail.content }} />
                             <div className="tags-section">
                               <ul className="tags lab-ul">
                                 <li>
@@ -169,28 +123,46 @@ const BlogSingle = () => {
                           </div>
                         </div>
                       </div>
-
-                      <div className="navigations-part">
-                        <div className="left">
-                          <a href="#" className="prev">
-                            <i className="icofont-double-left"></i>Previous Article
-                          </a>
-                          <a href="#" className="title">
-                            Evisculate Parallel Processes via Technica Sound Models Authoritative
-                          </a>
+                      <div className="authors">
+                        <div className="author-thumb">
+                          <img src={require('../assets/images/author/01.jpg')} alt="rajibraj91" />
                         </div>
-                        <div className="right">
-                          <a href="#" className="prev">
-                            Next Article<i className="icofont-double-right"></i>
-                          </a>
-                          <a href="#" className="title">
-                            Qvisculate Parallel Processes via Technica Sound Models Authoritative
-                          </a>
+                        <div className="author-content">
+                          <h5>{blogDetail.author.name}</h5>
+                          <span>{blogDetail.author.role}</span>
+                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, cupiditate!</p>
+                          <ul className="lab-ul social-icons">
+                            {socialList.map((val, i) => (
+                              <li key={i}>
+                                <a href={val.link} className={val.className}>
+                                  <i className={val.iconName}></i>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
-                      <Author />
-                      <Review />
-                      <Respond />
+                      <div className="comments">
+                        <h4 className="title-border">{blogDetail.comments.length} reviews</h4>
+                        <ul className="comment-list">
+                          {blogDetail.comments.map((c, i) => (
+                            <li className="comment" key={i}>
+                              <div className="com-thumb">
+                                <img src={require('../assets/images/author/03.jpg')} alt={c.user.name} />
+                              </div>
+                              <div className="com-content">
+                                <div className="com-title">
+                                  <div className="com-title-meta">
+                                    <h6>{c.user.name}</h6>
+                                    <span> {c.createdAt.split('T')[0]} </span>
+                                  </div>
+                                </div>
+                                <p>{c.comment}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -211,7 +183,9 @@ const BlogSingle = () => {
       </div>
       <Footer />
     </Fragment>
+  ) : (
+    <Loading />
   )
 }
 
-export default BlogSingle
+export default withBaseLogic(BlogSingle)

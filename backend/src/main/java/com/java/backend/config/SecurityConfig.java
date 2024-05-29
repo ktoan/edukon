@@ -52,10 +52,10 @@ public class SecurityConfig {
 					registry.requestMatchers(HttpMethod.PUT, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
 					registry.requestMatchers(HttpMethod.DELETE, "/api/v1/category/**").hasAuthority(Role.ADMIN.name());
 					// Only instructor permission
-					registry.requestMatchers(HttpMethod.POST, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
-					registry.requestMatchers(HttpMethod.PUT, "/api/v1/course/**").hasAuthority(Role.INSTRUCTOR.name());
-					registry.requestMatchers(HttpMethod.POST, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
-					registry.requestMatchers(HttpMethod.PUT, "/api/v1/video/**").hasAuthority(Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.POST, "/api/v1/assignment/**", "/api/v1/course/**", "/api/v1/video/**")
+							.hasAuthority(Role.INSTRUCTOR.name());
+					registry.requestMatchers(HttpMethod.PUT, "/api/v1/course/**", "/api/v1/video/**")
+							.hasAuthority(Role.INSTRUCTOR.name());
 					// Only student permission
 					registry.requestMatchers(HttpMethod.POST, "/api/v1/review/**").hasAuthority(Role.STUDENT.name());
 					registry.anyRequest().authenticated();

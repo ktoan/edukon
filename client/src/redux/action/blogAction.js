@@ -12,3 +12,14 @@ export const fetchAllBlogs = async (dispatch) => {
     console.log(error.response ? error.response.message : error.message)
   }
 }
+
+export const fetchBlogDetail = async (blogId, next = () => {}, errorHandle = () => {}) => {
+  try {
+    const res = await axios.get(`${API_ROUTES.blogDetail}?blogId=${blogId}`)
+    if (res.data.success) {
+      next(res.data.blog)
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.msg : error.message)
+  }
+}
