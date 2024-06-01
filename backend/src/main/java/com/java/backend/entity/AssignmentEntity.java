@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "assignments")
@@ -24,4 +26,6 @@ public class AssignmentEntity extends AbstractEntity {
 	private VideoEntity video;
 	@Column(nullable = false)
 	private LocalDate deadline;
+	@OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SubmissionEntity> submissions = new ArrayList<>();
 }

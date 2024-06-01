@@ -113,7 +113,7 @@ const Enroll = ({ user, requiredLogin }) => {
                       to=""
                       className="lab-btn bg-primary"
                     >
-                      <span>Create Payment</span>
+                      <span>{loading ? `Loading...` : `Create Payment`}</span>
                     </button>
                   </div>
                 </div>

@@ -147,7 +147,7 @@ const CourseView = ({ user }) => {
                             <span className="text-secondary">Put the file you need to summarize</span>
                             <input type="file" className="mb-2" onChange={onFileChange} />
                             <button disabled={loading} onClick={onFileUpload} className="lab-btn text-white fs-6">
-                              {loading ? <LoadingInner /> : `Generate`}
+                              {loading ? `Generating...` : `Generate`}
                             </button>
                           </div>
                           <textarea
@@ -175,26 +175,25 @@ const CourseView = ({ user }) => {
                                 <div id="accordion">
                                   {courseDetail.videos.map((video, i) => (
                                     <div key={i} className="card bg-ash mb-1">
-                                      <div className="card-header bg-transparent border-bottom-0" id="acc-list-1">
-                                        <h5 className="mb-0">
-                                          <button
-                                            className={`w-100 border-0 bg-transparent outline-none text-left`}
-                                            data-bs-toggle="collapse"
-                                          >
-                                            Lesson {i + 1}: {video.title}
-                                          </button>
-                                        </h5>
-                                      </div>
                                       <div onClick={() => setVideoUrl(video.source)} className="collapse show">
                                         <div className="card-body py-0">
                                           <div className="course-lists d-flex flex-wrap justify-content-between">
-                                            <div className="csa-left">
+                                            <div className="csa-left" style={{ width: '100%', overflow: 'hidden' }}>
                                               <i
                                                 className={`${
                                                   video.tracked ? `icofont-check-circled text-success` : `icofont-lock`
                                                 }`}
                                               ></i>
-                                              <h6>{video.title}</h6>
+                                              <h6
+                                                style={{
+                                                  textOverflow: 'ellipsis',
+                                                  maxWidth: '100%',
+                                                  whiteSpace: 'nowrap',
+                                                  overflow: 'hidden'
+                                                }}
+                                              >
+                                                Lesson {i + 1}: {video.title}
+                                              </h6>
                                               <p>
                                                 <i className="icofont-play-alt-2"></i>
                                                 {videoDurations[`video-${i}`]

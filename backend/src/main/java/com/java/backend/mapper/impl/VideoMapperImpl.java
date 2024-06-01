@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VideoMapperImpl implements VideoMapper {
-	private ModelMapper modelMapper;
-	private TrackingProgressService trackingProgressService;
+	private final ModelMapper modelMapper;
+	private final TrackingProgressService trackingProgressService;
 
 	@Autowired
 	public VideoMapperImpl(ModelMapper modelMapper, @Lazy TrackingProgressService trackingProgressService) {
