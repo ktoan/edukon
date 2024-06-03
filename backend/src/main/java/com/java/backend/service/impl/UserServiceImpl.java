@@ -17,6 +17,7 @@ import com.java.backend.request.RegisterRequest;
 import com.java.backend.service.ConfirmationTokenService;
 import com.java.backend.service.UserService;
 import com.java.backend.util.ContextUtil;
+import com.java.backend.util.FileUtil;
 import com.java.backend.util.MailUtil;
 import com.java.backend.util.StringUtil;
 import jakarta.mail.MessagingException;
@@ -28,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.Locale;
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private final UserMapper userMapper;
 	private final MailUtil mailUtil;
 	private final StringUtil stringUtil;
+	private final FileUtil fileUtil;
 	private final MessageSource messageSource;
 	private final ContextUtil contextUtil;
 
@@ -151,5 +154,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 					messageSource.getMessage("msg.not-found", new Object[]{"Email", email}, Locale.ENGLISH));
 		}
 		return user.get();
+	}
+
+	@Override
+	public UserDto updateUser(UserDto userDto) {
+		UserEntity user = contextUtil.loadUserFromContext();
+		if (userDto.getEmail() != null) {
+			throw new NotAccessException("You can't update email!");
+		}
+		if (userDto.getName() != null) {
+			user.setName(userDto.getName());
+		}
+		if (userDto.getPhone() != null) {
+			user.setPhone(userDto.getPhone());
+		}
+		if (userDto.getGender() != null) {
+			user.setGender(userDto.getGender());
+		}
+		return userMapper.toDto(saveUser(user));
+	}
+
+	@Override
+	public String uploadAvatar(MultipartFile file) {
+		String newAvatar = fileUtil.uploadImage(file, "avatars");
+		UserEntity user = contextUtil.loadUserFromContext();
+		user.setAvatar(newAvatar);
+		user = saveUser(user);
+		return user.getAvatar();
 	}
 }

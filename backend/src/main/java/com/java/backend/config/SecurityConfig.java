@@ -35,9 +35,7 @@ public class SecurityConfig {
 					registry.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/request-token",
 							"/api/v1/auth/confirm-account").permitAll();
 					// Public route
-					registry.requestMatchers(HttpMethod.GET, "/api/v1/category/**").permitAll();
-					registry.requestMatchers(HttpMethod.GET, "/api/v1/blog/**").permitAll();
-					registry.requestMatchers(HttpMethod.GET, "/api/v1/course/**").permitAll();
+					registry.requestMatchers(HttpMethod.GET, "/api/v1/category/**","/api/v1/course/**","/api/v1/blog/**", "/swagger-ui/**").permitAll();
 					// Admin/Instructor permission
 					registry.requestMatchers(HttpMethod.POST, "/api/v1/blog/**")
 							.hasAnyAuthority(Role.ADMIN.name(), Role.INSTRUCTOR.name());

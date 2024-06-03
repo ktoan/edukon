@@ -6,6 +6,8 @@ import com.java.backend.request.LoginRequest;
 import com.java.backend.request.RegisterRequest;
 import com.java.backend.service.UserService;
 import com.java.backend.util.JwtTokenUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @CrossOrigin(allowedHeaders = "*", origins = "*")
+@Tag(name = "Authentication")
 public class AuthController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
@@ -29,20 +32,23 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/load-user")
-    public ResponseEntity<Object> loadUser() {
+    @Operation(summary = "Load current user by access token from authentication header")
+    public ResponseEntity<?> loadUser() {
         UserDto user = userService.loadUser();
         return new ResponseEntity<>(Map.of("success", true, "user", user), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    @Operation(summary = "Register new user")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         userService.register(registerRequest);
         return new ResponseEntity<>(Map.of("success", true, "message", "User created successfully!"),
                 HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
+    @Operation(summary = "Login user for user information and access token")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         loginRequest = userService.validateLogin(loginRequest);
         authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
@@ -53,14 +59,16 @@ public class AuthController {
     }
 
     @PostMapping("/request-token")
-    public ResponseEntity<Object> requestToken(@RequestParam String email) {
+    @Operation(summary = "Request confirmation token for enable account")
+    public ResponseEntity<?> requestToken(@RequestParam String email) {
         userService.requestToken(email);
         return new ResponseEntity<>(Map.of("success", true, "message",
                 "Confirmation token has been sent. Please check your email to receive it!"), HttpStatus.CREATED);
     }
 
     @PostMapping("/confirm-account")
-    public ResponseEntity<Object> confirmAccount(@Valid @RequestBody ConfirmAccountRequest confirmAccountRequest) {
+    @Operation(summary = "Confirm account by token received from /request-token")
+    public ResponseEntity<?> confirmAccount(@Valid @RequestBody ConfirmAccountRequest confirmAccountRequest) {
         userService.confirmToken(confirmAccountRequest);
         return new ResponseEntity<>(Map.of("success", true, "message", "Your account is enable. Let's login!"),
                 HttpStatus.ACCEPTED);

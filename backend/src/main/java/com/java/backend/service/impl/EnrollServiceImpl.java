@@ -1,11 +1,13 @@
 package com.java.backend.service.impl;
 
+import com.java.backend.dto.CourseDto;
 import com.java.backend.entity.CourseEntity;
 import com.java.backend.entity.EnrollEntity;
 import com.java.backend.entity.UserEntity;
 import com.java.backend.enums.PaymentMethod;
 import com.java.backend.exception.BadRequestException;
 import com.java.backend.exception.InternalServerException;
+import com.java.backend.mapper.CourseMapper;
 import com.java.backend.repository.EnrollRepository;
 import com.java.backend.request.EnrollRequest;
 import com.java.backend.request.ExecutePaypalRequest;
@@ -17,6 +19,8 @@ import com.java.backend.util.PaymentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -27,6 +31,17 @@ public class EnrollServiceImpl implements EnrollService {
 	private final PaymentUtil paymentUtil;
 	private final ContextUtil contextUtil;
 	private final UserService userService;
+	private final CourseMapper courseMapper;
+
+	@Override
+	public List<CourseDto> getEnrolledCourse() {
+		UserEntity user = contextUtil.loadUserFromContext();
+		List<CourseDto> courses = new ArrayList<>();
+		user.getEnrolls().forEach(e -> {
+			courses.add(courseMapper.toDto(e.getCourse()));
+		});
+		return courses;
+	}
 
 	@Override
 	public EnrollEntity saveEnroll(EnrollEntity enroll) {
@@ -62,7 +77,6 @@ public class EnrollServiceImpl implements EnrollService {
 			user.getEnrolls().add(enroll);
 			userService.saveUser(user);
 		}
-		// Others payment method
 		return enroll != null;
 	}
 }

@@ -7,4 +7,5 @@ import com.java.backend.request.SubmissionRequest;
 public interface SubmissionService {
     SubmissionEntity saveSubmission(SubmissionEntity submission);
     SubmissionDto createSubmission(SubmissionRequest submissionRequest);
+    SubmissionEntity findSubmissionEntityById(Integer submissionId);
 }

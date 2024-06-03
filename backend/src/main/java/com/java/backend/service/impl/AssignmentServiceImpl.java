@@ -10,6 +10,7 @@ import com.java.backend.repository.AssignmentRepository;
 import com.java.backend.request.AssignmentRequest;
 import com.java.backend.service.AssignmentService;
 import com.java.backend.service.VideoService;
+import com.java.backend.util.ContextUtil;
 import com.java.backend.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -26,6 +27,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	private final VideoService videoService;
 	private final MessageSource messageSource;
 	private final FileUtil fileUtil;
+	private final ContextUtil contextUtil;
 
 	@Override
 	public AssignmentEntity saveAssignment(AssignmentEntity assignment) {
@@ -45,6 +47,34 @@ public class AssignmentServiceImpl implements AssignmentService {
 		newAssignment.setSource(fileUtil.uploadVideo(assignmentRequest.getFile(), "references"));
 		newAssignment.setVideo(video);
 		return assignmentMapper.toDto(saveAssignment(newAssignment));
+	}
+
+	@Override
+	public AssignmentDto updateAssignment(Integer assignmentId, AssignmentRequest assignmentRequest) {
+		AssignmentEntity updatedAssignment = findAssignmentEntityById(assignmentId);
+		if (assignmentRequest.getTitle()!= null) {
+			updatedAssignment.setTitle(assignmentRequest.getTitle());
+		}
+		if (assignmentRequest.getContent()!= null) {
+            updatedAssignment.setContent(assignmentRequest.getContent());
+        }
+		if (assignmentRequest.getRequirement()!= null) {
+            updatedAssignment.setRequirement(assignmentRequest.getRequirement());
+        }
+		if (assignmentRequest.getFile()!= null) {
+            updatedAssignment.setSource(fileUtil.uploadVideo(assignmentRequest.getFile(), "references"));
+        }
+
+		return assignmentMapper.toDto(saveAssignment(updatedAssignment));
+	}
+
+	@Override
+	public void deleteAssignment(Integer assignmentId) {
+		AssignmentEntity deletedAssignment = findAssignmentEntityById(assignmentId);
+		VideoEntity video = deletedAssignment.getVideo();
+		video.setAssignment(null);
+		videoService.saveVideo(video);
+        assignmentRepository.delete(deletedAssignment);
 	}
 
 	@Override

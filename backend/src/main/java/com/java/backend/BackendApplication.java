@@ -2,6 +2,8 @@ package com.java.backend;
 
 import com.cloudinary.Cloudinary;
 import com.paypal.base.rest.APIContext;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -63,6 +65,22 @@ public class BackendApplication {
 		messageSource.setCacheSeconds(3600);
 		messageSource.setUseCodeAsDefaultMessage(true);
 		return messageSource;
+	}
+
+	@Bean
+	public OpenAPI openApi() {
+		return new OpenAPI()
+                .info(new io.swagger.v3.oas.models.info.Info()
+                        .title("EduKon API")
+                        .version("1.0.0")
+                        .description("EduKon API is the backend service powering an educational website. It provides endpoints for managing educational resources, courses, categories, and blogs. Users can access a wealth of educational content, enroll in courses, and stay updated with the latest educational blog posts. This API follows the REST architectural style and adheres to the OpenAPI Specification.")
+                        .termsOfService("http://swagger.io/terms/")
+                        .contact(new io.swagger.v3.oas.models.info.Contact()
+                                .name("Swagger")
+                                .url("http://swagger.io"))
+                        .license(new io.swagger.v3.oas.models.info.License()
+                                .name("Apache 2.0")
+                                .url("http://www.apache.org/licenses/LICENSE-2.0.html")));
 	}
 
 	@Bean
