@@ -24,9 +24,9 @@ public class EnrollController {
 	@GetMapping("/course")
 	@Operation(summary = "Get enrolled courses")
 	public ResponseEntity<Object> getEnrolledCourse() {
-        return new ResponseEntity<>(Map.of("success", true, "enrolled_courses", enrollService.getEnrolledCourse()),
-                HttpStatus.OK);
-    }
+		return new ResponseEntity<>(Map.of("success", true, "enrolled_courses", enrollService.getEnrolledCourse()),
+				HttpStatus.OK);
+	}
 
 	@PostMapping("/create")
 	@Operation(summary = "Create enroll")

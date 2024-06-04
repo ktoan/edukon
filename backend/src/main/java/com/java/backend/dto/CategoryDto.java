@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryDto extends AbstractDto {
-    private String name;
-    private String thumbnail;
+	private String name;
+	private String thumbnail;
 }

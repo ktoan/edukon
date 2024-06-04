@@ -18,19 +18,19 @@ import java.util.Map;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @Tag(name = "User")
 public class UserController {
-    private final UserService userService;
+	private final UserService userService;
 
-    @PostMapping("/update")
-    @Operation(summary = "Update user information")
-    public ResponseEntity<?> updateUser(@RequestBody UserDto userRequest) {
-        UserDto updatedUser = userService.updateUser(userRequest);
-        return new ResponseEntity<>(Map.of("success", true, "updated_user", updatedUser), HttpStatus.OK);
-    }
+	@PostMapping("/update")
+	@Operation(summary = "Update user information")
+	public ResponseEntity<?> updateUser(@RequestBody UserDto userRequest) {
+		UserDto updatedUser = userService.updateUser(userRequest);
+		return new ResponseEntity<>(Map.of("success", true, "updated_user", updatedUser), HttpStatus.OK);
+	}
 
-    @PostMapping("/change-avatar")
-    @Operation(summary = "Change user avatar")
-    public ResponseEntity<?> changeAvatar(@RequestParam MultipartFile file) {
-        String avatar = userService.uploadAvatar(file);
-        return new ResponseEntity<>(Map.of("success", true, "new_avatar", avatar), HttpStatus.OK);
-    }
+	@PostMapping("/change-avatar")
+	@Operation(summary = "Change user avatar")
+	public ResponseEntity<?> changeAvatar(@RequestParam MultipartFile file) {
+		String avatar = userService.uploadAvatar(file);
+		return new ResponseEntity<>(Map.of("success", true, "new_avatar", avatar), HttpStatus.OK);
+	}
 }

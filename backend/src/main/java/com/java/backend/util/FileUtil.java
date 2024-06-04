@@ -9,5 +9,6 @@ public interface FileUtil {
 	String uploadVideo(MultipartFile multipartFile, String folder);
 
 	String uploadFile(MultipartFile multipartFile, String folder);
+
 	String generateCertificate(String username, String course, String rank);
 }

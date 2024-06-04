@@ -11,14 +11,14 @@ import java.util.Date;
 @Getter
 @Setter
 public class CertificateEntity extends AbstractEntity {
-    @Column(nullable = false)
-    private String source;
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "student_id")
-    private UserEntity user;
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "course_id")
-    private CourseEntity course;
-    @Column(nullable = false)
-    private Date expiredAt;
+	@Column(nullable = false)
+	private String source;
+	@ManyToOne
+	@JoinColumn(nullable = false, name = "student_id")
+	private UserEntity user;
+	@ManyToOne
+	@JoinColumn(nullable = false, name = "course_id")
+	private CourseEntity course;
+	@Column(nullable = false)
+	private Date expiredAt;
 }

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SubmissionMapperImpl implements SubmissionMapper {
-    private final ModelMapper modelMapper;
-    
-    @Override
-    public SubmissionDto toDto(SubmissionEntity submission) {
-        return modelMapper.map(submission, SubmissionDto.class);
-    }
+	private final ModelMapper modelMapper;
+
+	@Override
+	public SubmissionDto toDto(SubmissionEntity submission) {
+		return modelMapper.map(submission, SubmissionDto.class);
+	}
 }

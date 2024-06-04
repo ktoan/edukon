@@ -4,5 +4,5 @@ import com.java.backend.dto.SubmissionDto;
 import com.java.backend.entity.SubmissionEntity;
 
 public interface SubmissionMapper {
-    SubmissionDto toDto(SubmissionEntity submission);
+	SubmissionDto toDto(SubmissionEntity submission);
 }

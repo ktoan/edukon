@@ -11,11 +11,11 @@ import java.util.Date;
 @Getter
 @Setter
 public class ConfirmationTokenEntity extends AbstractEntity {
-    @Column(nullable = false, unique = true)
-    private String token;
-    @Column(nullable = false)
-    private Date expiredAt;
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
-    private UserEntity user;
+	@Column(nullable = false, unique = true)
+	private String token;
+	@Column(nullable = false)
+	private Date expiredAt;
+	@ManyToOne
+	@JoinColumn(nullable = false, name = "user_id")
+	private UserEntity user;
 }

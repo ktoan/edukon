@@ -14,17 +14,17 @@ import java.util.Date;
 @Setter
 @ToString
 public abstract class AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
-    @CreationTimestamp
-    private Date createdAt;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, updatable = false)
+	@CreationTimestamp
+	private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    @UpdateTimestamp
-    private Date updatedAt;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+	@UpdateTimestamp
+	private Date updatedAt;
 }

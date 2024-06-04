@@ -19,12 +19,12 @@ import java.util.Map;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @Tag(name = "Submission")
 public class SubmissionController {
-    private final SubmissionService submissionService;
+	private final SubmissionService submissionService;
 
-    @PostMapping("/create")
-    @Operation(summary = "Create new submis")
-    public ResponseEntity<?> createSubmission(@Valid @ModelAttribute SubmissionRequest submissionRequest) {
-        SubmissionDto newSubmission = submissionService.createSubmission(submissionRequest);
-        return new ResponseEntity<>(Map.of("success", true, "new_submission", newSubmission), HttpStatus.CREATED);
-    }
+	@PostMapping("/create")
+	@Operation(summary = "Create new submission")
+	public ResponseEntity<?> createSubmission(@Valid @ModelAttribute SubmissionRequest submissionRequest) {
+		SubmissionDto newSubmission = submissionService.createSubmission(submissionRequest);
+		return new ResponseEntity<>(Map.of("success", true, "new_submission", newSubmission), HttpStatus.CREATED);
+	}
 }

@@ -21,6 +21,8 @@ public class TrackingProgressController {
     @PostMapping("/create")
     @Operation(summary = "Create new tracking progress")
     public ResponseEntity<Object> createTrackingProgress(@RequestParam Integer videoId) {
-        return new ResponseEntity<>(Map.of("success", true, "is_watched", trackingProgressService.createTrackingProgress(videoId)), HttpStatus.OK);
+        return new ResponseEntity<>(
+                Map.of("success", true, "is_watched", trackingProgressService.createTrackingProgress(videoId)),
+                HttpStatus.OK);
     }
 }

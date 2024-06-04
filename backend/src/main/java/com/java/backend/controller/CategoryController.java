@@ -21,35 +21,35 @@ import java.util.Map;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @Tag(name = "Category")
 public class CategoryController {
-    private final CategoryService categoryService;
+	private final CategoryService categoryService;
 
-    @GetMapping("")
-    @Operation(summary = "Get all categories")
-    public ResponseEntity<?> findAllCategories() {
-        List<CategoryDto> categories = categoryService.findAllCategories();
-        return new ResponseEntity<>(Map.of("success", true, "categories", categories), HttpStatus.OK);
-    }
+	@GetMapping("")
+	@Operation(summary = "Get all categories")
+	public ResponseEntity<?> findAllCategories() {
+		List<CategoryDto> categories = categoryService.findAllCategories();
+		return new ResponseEntity<>(Map.of("success", true, "categories", categories), HttpStatus.OK);
+	}
 
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Create new category")
-    public ResponseEntity<?> createCategory(@Valid @ModelAttribute CategoryRequest categoryRequest) {
-        CategoryDto newCategory = categoryService.createCategory(categoryRequest);
-        return new ResponseEntity<>(Map.of("success", true, "new_category", newCategory), HttpStatus.CREATED);
-    }
+	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Operation(summary = "Create new category")
+	public ResponseEntity<?> createCategory(@Valid @ModelAttribute CategoryRequest categoryRequest) {
+		CategoryDto newCategory = categoryService.createCategory(categoryRequest);
+		return new ResponseEntity<>(Map.of("success", true, "new_category", newCategory), HttpStatus.CREATED);
+	}
 
-    @PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Update category by id")
-    public ResponseEntity<?> updateCategory(@RequestParam Integer categoryId,
-                                                 @ModelAttribute CategoryRequest categoryRequest) {
-        CategoryDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
-        return new ResponseEntity<>(Map.of("success", true, "updated_category", updatedCategory), HttpStatus.OK);
-    }
+	@PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Operation(summary = "Update category by id")
+	public ResponseEntity<?> updateCategory(@RequestParam Integer categoryId,
+	                                        @ModelAttribute CategoryRequest categoryRequest) {
+		CategoryDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
+		return new ResponseEntity<>(Map.of("success", true, "updated_category", updatedCategory), HttpStatus.OK);
+	}
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "Delete category by id")
-    public ResponseEntity<?> deleteCategory(@RequestParam Integer categoryId) {
-        categoryService.deleteCategory(categoryId);
-        return new ResponseEntity<>(Map.of("success", true, "message", "Category deleted successfully!"),
-                HttpStatus.OK);
-    }
+	@DeleteMapping("/delete")
+	@Operation(summary = "Delete category by id")
+	public ResponseEntity<?> deleteCategory(@RequestParam Integer categoryId) {
+		categoryService.deleteCategory(categoryId);
+		return new ResponseEntity<>(Map.of("success", true, "message", "Category deleted successfully!"),
+				HttpStatus.OK);
+	}
 }

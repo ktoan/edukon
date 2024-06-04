@@ -34,9 +34,7 @@ public class CourseController {
 	@Operation(summary = "Get details course by id")
 	public ResponseEntity<Object> getDetailsCourse(@RequestParam Integer courseId) {
 		CourseDto course = courseService.getCourseById(courseId);
-		return new ResponseEntity<>(
-				Map.of("success", true, "course", course),
-				HttpStatus.OK);
+		return new ResponseEntity<>(Map.of("success", true, "course", course), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

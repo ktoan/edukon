@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BlogMapperImpl implements BlogMapper {
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    @Override
-    public BlogEntity toEntity(BlogDto blogDto) {
-        return modelMapper.map(blogDto, BlogEntity.class);
-    }
+	@Override
+	public BlogEntity toEntity(BlogDto blogDto) {
+		return modelMapper.map(blogDto, BlogEntity.class);
+	}
 
-    @Override
-    public BlogDto toDto(BlogEntity blog) {
-        return modelMapper.map(blog, BlogDto.class);
-    }
+	@Override
+	public BlogDto toDto(BlogEntity blog) {
+		return modelMapper.map(blog, BlogDto.class);
+	}
 }

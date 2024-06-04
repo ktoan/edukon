@@ -11,8 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryEntity extends AbstractEntity {
-    @Column(nullable = false, unique = true)
-    private String name;
-    @Column(nullable = false)
-    private String thumbnail;
+	@Column(nullable = false, unique = true)
+	private String name;
+	@Column(nullable = false)
+	private String thumbnail;
 }

@@ -4,7 +4,7 @@ import com.java.backend.dto.UserDto;
 import com.java.backend.entity.UserEntity;
 
 public interface UserMapper {
-    UserEntity toEntity(UserDto userDto);
+	UserEntity toEntity(UserDto userDto);
 
-    UserDto toDto(UserEntity user);
+	UserDto toDto(UserEntity user);
 }

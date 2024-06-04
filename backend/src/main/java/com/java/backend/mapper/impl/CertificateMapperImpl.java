@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CertificateMapperImpl implements CertificateMapper {
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    @Override
-    public CertificateDto toDto(CertificateEntity certificate) {
-        return modelMapper.map(certificate, CertificateDto.class);
-    }
+	@Override
+	public CertificateDto toDto(CertificateEntity certificate) {
+		return modelMapper.map(certificate, CertificateDto.class);
+	}
 }

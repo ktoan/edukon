@@ -4,7 +4,7 @@ import com.java.backend.dto.CommentDto;
 import com.java.backend.entity.CommentEntity;
 
 public interface CommentMapper {
-    CommentEntity toEntity(CommentDto commentDto);
+	CommentEntity toEntity(CommentDto commentDto);
 
-    CommentDto toDto(CommentEntity comment);
+	CommentDto toDto(CommentEntity comment);
 }

@@ -31,15 +31,18 @@ public class AssignmentController {
 
 	@PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "Update assignment by id")
-	public ResponseEntity<?> updateAssignment(@RequestParam Integer assignmentId, @Valid @ModelAttribute AssignmentRequest assignmentRequest) {
+	public ResponseEntity<?> updateAssignment(@RequestParam Integer assignmentId,
+	                                          @Valid @ModelAttribute AssignmentRequest assignmentRequest) {
 		AssignmentDto updatedAssignment = assignmentService.updateAssignment(assignmentId, assignmentRequest);
-		return new ResponseEntity<>(Map.of("success", true, "updated_assignment", updatedAssignment), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("success", true, "updated_assignment", updatedAssignment),
+				HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/delete")
 	@Operation(summary = "Delete assignment by id")
 	public ResponseEntity<?> deleteAssignment(@RequestParam Integer assignmentId) {
 		assignmentService.deleteAssignment(assignmentId);
-		return new ResponseEntity<>(Map.of("success", true, "message", "Delete assignment successfully!"), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("success", true, "message", "Delete assignment successfully!"),
+				HttpStatus.CREATED);
 	}
 }

@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CategoryMapperImpl implements CategoryMapper {
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    @Override
-    public CategoryEntity toEntity(CategoryDto categoryDto) {
-        return modelMapper.map(categoryDto, CategoryEntity.class);
-    }
+	@Override
+	public CategoryEntity toEntity(CategoryDto categoryDto) {
+		return modelMapper.map(categoryDto, CategoryEntity.class);
+	}
 
-    @Override
-    public CategoryDto toDto(CategoryEntity category) {
-        return modelMapper.map(category, CategoryDto.class);
-    }
+	@Override
+	public CategoryDto toDto(CategoryEntity category) {
+		return modelMapper.map(category, CategoryDto.class);
+	}
 }

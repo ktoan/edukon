@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ReviewMapperImpl implements ReviewMapper {
 	private final ModelMapper modelMapper;
+
 	@Override
 	public ReviewEntity toEntity(ReviewDto reviewDto) {
 		return modelMapper.map(reviewDto, ReviewEntity.class);

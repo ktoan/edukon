@@ -4,5 +4,5 @@ import com.java.backend.dto.CertificateDto;
 import com.java.backend.entity.CertificateEntity;
 
 public interface CertificateMapper {
-    CertificateDto toDto(CertificateEntity certificate);
+	CertificateDto toDto(CertificateEntity certificate);
 }

@@ -4,7 +4,7 @@ import com.java.backend.dto.BlogDto;
 import com.java.backend.entity.BlogEntity;
 
 public interface BlogMapper {
-    BlogEntity toEntity(BlogDto blogDto);
+	BlogEntity toEntity(BlogDto blogDto);
 
-    BlogDto toDto(BlogEntity blog);
+	BlogDto toDto(BlogEntity blog);
 }
