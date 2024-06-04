@@ -18,9 +18,13 @@ import java.util.*;
 @Setter
 @ToString
 public class UserEntity extends AbstractEntity implements UserDetails {
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
+	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
 	private String avatar;
 	private String phone;
 	@Enumerated(EnumType.STRING)
@@ -43,6 +47,8 @@ public class UserEntity extends AbstractEntity implements UserDetails {
 	private Set<ReviewEntity> reviews = new HashSet<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<TrackingProgressEntity> trackingProgresses = new HashSet<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<CertificateEntity> certificates = new HashSet<>();
 
 	@Override
 	@Transient

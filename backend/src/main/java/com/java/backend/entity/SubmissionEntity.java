@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SubmissionEntity extends AbstractEntity {
+    @Column(nullable = false)
     private String source;
     @ManyToOne
     @JoinColumn(nullable = false, name = "assignment_id")

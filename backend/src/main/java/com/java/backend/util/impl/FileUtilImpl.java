@@ -56,4 +56,9 @@ public class FileUtilImpl implements FileUtil {
 			throw new InternalServerException(e.getMessage());
 		}
 	}
+
+	@Override
+	public String generateCertificate(String username, String course, String rank) {
+		return "";
+	}
 }

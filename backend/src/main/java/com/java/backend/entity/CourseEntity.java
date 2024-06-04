@@ -33,6 +33,8 @@ public class CourseEntity extends AbstractEntity {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Where(clause = "parent_id is null")
 	private List<ReviewEntity> reviews = new ArrayList<>();
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<CertificateEntity> certificates = new ArrayList<>();
 
 	public void removeVideo(Integer videoId) {
 		this.videos.removeIf(video -> Objects.equals(video.getId(), videoId));
