@@ -1,9 +1,6 @@
 package com.java.backend.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,9 +18,13 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Date createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     @UpdateTimestamp
     private Date updatedAt;
 }
