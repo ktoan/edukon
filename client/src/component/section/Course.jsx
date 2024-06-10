@@ -58,13 +58,10 @@ const Course = () => {
                           </div>
                         </div>
                         <div className="course-footer">
-                          <div className="course-author">
+                          <div className="course-author" style={{ display: 'flex', alignItems: 'center' }}>
                             <img
-                              src={
-                                course.instructor.gender === 'MALE'
-                                  ? 'assets/images/course/author/05.jpg'
-                                  : 'assets/images/course/author/06.jpg'
-                              }
+                              src={course.instructor.avatar}
+                              style={{ width: '32px', height: '32px' }}
                               alt={`Course img`}
                             />
                             <Link to="/team-single" className="ca-name">

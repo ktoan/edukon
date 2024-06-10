@@ -36,3 +36,36 @@ export const postReview = async (form, next = () => {}, errorHandle = () => {}) 
     errorHandle(error.response ? error.response.data.message : error.message)
   }
 }
+
+export const createTrackingProgress = async (videoId, next, errorHandle) => {
+  try {
+    const res = await axiosInstance.post(`${API_ROUTES.createTrackingProgress}?videoId=${videoId}`)
+    if (res.data.success) {
+      next(res.data.is_watched)
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.data.message : error.message)
+  }
+}
+
+export const createCertificate = async (courseId, next, errorHandle) => {
+  try {
+    const res = await axiosInstance.get(`${API_ROUTES.getCertificate}?courseId=${courseId}`)
+    if (res.data.success) {
+      next(res.data.certificate)
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.data.message : error.message)
+  }
+}
+
+export const createSubmission = async (form, next, errorHandle) => {
+  try {
+    const res = await axiosInstance.post(API_ROUTES.createSubmission, form)
+    if (res.data.success) {
+      next()
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.data.message : error.message)
+  }
+}

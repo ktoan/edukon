@@ -2,6 +2,8 @@ package com.java.backend.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+
 
 public interface FileUtil {
 	String uploadImage(MultipartFile multipartFile, String folder);

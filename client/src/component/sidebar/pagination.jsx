@@ -1,11 +1,34 @@
 import React from 'react'
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pageNumbers = []
+  const getVisiblePageNumbers = () => {
+    let startPage, endPage
 
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i)
+    if (totalPages <= 3) {
+      // If total pages are less than or equal to 3, show all pages
+      startPage = 1
+      endPage = totalPages
+    } else {
+      if (currentPage <= 2) {
+        startPage = 1
+        endPage = 3
+      } else if (currentPage + 1 >= totalPages) {
+        startPage = totalPages - 2
+        endPage = totalPages
+      } else {
+        startPage = currentPage - 1
+        endPage = currentPage + 1
+      }
+    }
+
+    const pageNumbers = []
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i)
+    }
+    return pageNumbers
   }
+
+  const visiblePageNumbers = getVisiblePageNumbers()
 
   return (
     <ul className="default-pagination lab-ul">
@@ -14,7 +37,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           <i className="icofont-rounded-left"></i>
         </button>
       </li>
-      {pageNumbers.map((number) => (
+      {visiblePageNumbers.map((number) => (
         <li key={number}>
           <button onClick={() => onPageChange(number)} className={number === currentPage ? 'active' : ''}>
             {number}

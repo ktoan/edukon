@@ -11,6 +11,7 @@ import java.util.List;
 public class AssignmentDto extends AbstractDto {
 	private String title;
 	private String requirement;
+	private String source;
 	private String content;
 	private LocalDate deadline;
 	private List<SubmissionDto> submissions;

@@ -65,4 +65,12 @@ public class GlobalExceptionHandler {
 				.body(Map.of("success", false, "statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value(), "message",
 						e.getMessage(), "timestamp", LocalDateTime.now()));
 	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> exception(Exception e) {
+		LOG.error(e.getMessage());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+				.body(Map.of("success", false, "statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value(), "message",
+						e.getMessage(), "timestamp", LocalDateTime.now()));
+	}
 }

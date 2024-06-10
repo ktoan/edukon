@@ -2,6 +2,8 @@ package com.java.backend.util.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.java.backend.enums.CertificateRank;
 import com.java.backend.exception.InternalServerException;
 import com.java.backend.util.FileUtil;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +11,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -48,8 +53,8 @@ public class FileUtilImpl implements FileUtil {
 
 	public String uploadFile(MultipartFile file, String folder) {
 		try {
-			Map uploadResult = cloudinary.uploader()
-					.upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto", "folder",
+			Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+					ObjectUtils.asMap("resource_type", "auto", "folder",
 							folder != null ? "edukon/" + folder : "edukon/documents"));
 			return uploadResult.get("url").toString();
 		} catch (IOException e) {
@@ -59,6 +64,29 @@ public class FileUtilImpl implements FileUtil {
 
 	@Override
 	public String generateCertificate(String username, String course, String rank) {
-		return "";
+		String htmlFilePath = "src\\main\\resources\\templates\\certificate.html";
+		String outputFileName = System.currentTimeMillis() + "_" + username + "_" + course + ".pdf";
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
+		try {
+			String htmlContent = new String(Files.readAllBytes(Paths.get(htmlFilePath)), "UTF-8");
+			htmlContent = htmlContent.replace("{{username}}", username);
+			htmlContent = htmlContent.replace("{{course}}", course);
+			htmlContent = htmlContent.replace("{{rank}}",
+					Objects.equals(rank, CertificateRank.EXCELLENT.name()) ? "Excellence" : Objects.equals(rank,
+							CertificateRank.GOOD.name()) ? "Good" : "Average");
+			htmlContent = htmlContent.replace("{{date}}", sdf.format(new Date()));
+			HtmlConverter.convertToPdf(htmlContent, new FileOutputStream(outputFileName));
+			File toUpload = new File(outputFileName);
+			Map uploadResult = cloudinary.uploader()
+					.upload(toUpload, ObjectUtils.asMap("resource_type", "auto", "folder", "edukon/certificates"));
+			toUpload.delete();
+			return uploadResult.get("url").toString();
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found: " + e.getMessage());
+			return null;
+		} catch (IOException e) {
+			System.err.println("Error creating PDF: " + e.getMessage());
+			return null;
+		}
 	}
 }

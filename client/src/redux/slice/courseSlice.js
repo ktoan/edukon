@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  courses: [],
-};
+  courses: []
+}
 
 const courseSlice = createSlice({
-  name: "course",
+  name: 'course',
   initialState,
   reducers: {
     setCourses: (state, action) => {
-      state.courses = action.payload;
-    },
-  },
-});
+      state.courses = action.payload
+    }
+  }
+})
 
-export const { setCourses } = courseSlice.actions;
-export default courseSlice.reducer;
+export const { setCourses } = courseSlice.actions
+export default courseSlice.reducer

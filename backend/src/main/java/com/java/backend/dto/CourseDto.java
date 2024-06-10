@@ -20,4 +20,7 @@ public class CourseDto extends AbstractDto {
 	private List<ReviewDto> reviews;
 	@JsonProperty("is_enrolled")
 	private boolean isEnrolled = false;
+	@JsonProperty("has_certificate")
+	private boolean hasCertificate = false;
+	private String sourceCertificate;
 }

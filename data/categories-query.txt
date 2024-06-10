@@ -1,0 +1,11 @@
+INSERT INTO categories (id, created_at, updated_at, name, thumbnail) VALUES
+(1, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'Java', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(2, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'PHP', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(3, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'SQL', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(4, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'FrontEnd', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(5, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'FullStack', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(6, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'C/C++', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(7, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'Security', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(8, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'Design', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(9, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'English', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg'),
+(10, '2024-05-05 09:21:40.601000', '2024-05-05 09:21:40.601000', 'NPL', 'http://res.cloudinary.com/dhdqfpb8p/image/upload/v1714876232/edukon/category/268aac50-d1e9-4349-ba33-228af2127f911714876231058.jpg');

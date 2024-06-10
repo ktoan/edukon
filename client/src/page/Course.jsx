@@ -1,13 +1,12 @@
 import { Fragment, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Footer from '../component/layout/Footer'
 import Header from '../component/layout/Header'
 import PageHeader from '../component/layout/PageHeader'
-import GroupSelect from '../component/sidebar/group-select'
-import Pagination from '../component/sidebar/pagination'
+import Pagination from '../component/sidebar/Pagination'
 import Rating from '../component/sidebar/Rating'
 import SkillSelect from '../component/sidebar/skill-select'
-import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllCourses } from '../redux/action/courseAction'
 import { calculateAverageRating } from '../util/mathUtils'
 
@@ -73,7 +72,7 @@ const CoursePage = () => {
                             <span className="ratting-count"> {course.reviews.length} reviews</span>
                           </div>
                         </div>
-                        <Link to={course.is_enrolled ? `/view-course/${course.id}` : `/course/detail/${course.id}`}>
+                        <Link to={`/course/detail/${course.id}`}>
                           <h4>{course.name}</h4>
                         </Link>
                         <div className="course-details">
@@ -85,13 +84,10 @@ const CoursePage = () => {
                           </div>
                         </div>
                         <div className="course-footer">
-                          <div className="course-author">
+                          <div className="course-author" style={{ display: 'flex', alignItems: 'center' }}>
                             <img
-                              src={
-                                course.instructor.gender === 'MALE'
-                                  ? 'assets/images/course/author/05.jpg'
-                                  : 'assets/images/course/author/06.jpg'
-                              }
+                              src={course.instructor.avatar}
+                              style={{ width: '32px', height: '32px' }}
                               alt={`Course img`}
                             />
                             <Link to="/team-single" className="ca-name">

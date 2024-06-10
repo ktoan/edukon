@@ -22,3 +22,14 @@ export const executePayment = async (form, next, errorHandle) => {
     errorHandle(error.response ? error.response.data.message : error.message)
   }
 }
+
+export const getEnrolledCourse = async (next, errorHandle) => {
+  try {
+    const res = await axiosInstance.get(API_ROUTES.getEnrollCourse)
+    if (res.data.success) {
+      next(res.data.enrolled_courses)
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.data.message : error.message)
+  }
+}

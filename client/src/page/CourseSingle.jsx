@@ -78,9 +78,22 @@ const CourseSingle = ({ user }) => {
   const [courseDetail, setCourseDetail] = useState(null)
   const [loading, setLoading] = useState(false)
   const [rating, setRating] = useState(0)
+  const [showAll, setShowAll] = useState(false)
+  const [visibleReviews, setVisibleReviews] = useState(3)
   const [comment, setComment] = useState('')
   const params = useParams()
   const { courseId } = params
+  const loadMoreReviews = () => {
+    if (visibleReviews + 3 >= courseDetail.reviews.length) {
+      setShowAll(true)
+    }
+    setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 3)
+  }
+
+  const showLessReviews = () => {
+    setVisibleReviews(3)
+    setShowAll(false)
+  }
 
   useEffect(() => {
     if (courseId) {
@@ -169,7 +182,7 @@ const CourseSingle = ({ user }) => {
                 </div>
                 <div className="authors">
                   <div className="author-thumb">
-                    <img src={require('../assets/images/author/01.jpg')} alt="rajibraj91" />
+                    <img src={courseDetail.instructor.avatar} alt="rajibraj91" />
                   </div>
                   <div className="author-content">
                     <h5>{courseDetail.instructor.name}</h5>
@@ -189,10 +202,10 @@ const CourseSingle = ({ user }) => {
                 <div className="comments">
                   <h4 className="title-border">{courseDetail.reviews.length} reviews</h4>
                   <ul className="comment-list">
-                    {courseDetail.reviews.map((r, i) => (
+                    {courseDetail.reviews.slice(0, visibleReviews).map((r, i) => (
                       <li className="comment" key={i}>
                         <div className="com-thumb">
-                          <img src={require('../assets/images/author/03.jpg')} alt={r.user.name} />
+                          <img src={r.user.avatar} alt={r.user.name} />
                         </div>
                         <div className="com-content">
                           <div className="com-title">
@@ -207,8 +220,22 @@ const CourseSingle = ({ user }) => {
                       </li>
                     ))}
                   </ul>
+                  {visibleReviews < courseDetail.reviews.length && (
+                    <div className="w-100 text-center">
+                      <button onClick={loadMoreReviews} className="mb-3 lab-btn text-white">
+                        Load more
+                      </button>
+                    </div>
+                  )}
+                  {visibleReviews > 3 && (
+                    <div className="w-100 text-center">
+                      <button onClick={showLessReviews} className="mb-3 lab-btn text-white">
+                        Show less
+                      </button>
+                    </div>
+                  )}
                 </div>
-                {courseDetail.is_enrolled && (
+                {courseDetail.is_enrolled && !courseDetail.reviews.some((r) => r.user.id !== user.id) && (
                   <div id="respond" className="comment-respond mb-lg-0">
                     <h4 className="title-border">Leave a review</h4>
                     <div className="add-comment">

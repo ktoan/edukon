@@ -37,7 +37,7 @@ public class TrackingProgressServiceImpl implements TrackingProgressService {
 	public boolean createTrackingProgress(Integer videoId) {
 		UserEntity user = contextUtil.loadUserFromContext();
 		VideoEntity video = videoService.findVideoEntityById(videoId);
-		if (isTrackedProgress(user, video, videoId)) {
+		if (isTrackedProgress(user, video)) {
 			throw new BadRequestException("Invalid tracking progress request!");
 		}
 		TrackingProgressEntity trackingProgress = new TrackingProgressEntity();
@@ -51,15 +51,13 @@ public class TrackingProgressServiceImpl implements TrackingProgressService {
 	public boolean isCompleteVideo(Integer videoId) {
 		UserEntity user = contextUtil.loadUserFromContext();
 		VideoEntity video = videoService.findVideoEntityById(videoId);
-		return isTrackedProgress(user, video, videoId);
+		return isTrackedProgress(user, video);
 	}
 
-	private boolean isTrackedProgress(UserEntity user, VideoEntity video, Integer videoId) {
+	private boolean isTrackedProgress(UserEntity user, VideoEntity video) {
 		if (user == null) {
 			return false;
 		}
-		return user.getTrackingProgresses().stream()
-				.anyMatch(t -> Objects.equals(t.getVideo().getId(), videoId)) && video.getTrackingProgresses().stream()
-				.anyMatch(t -> Objects.equals(t.getUser().getId(), user.getId()));
+		return user.getTrackingProgresses().stream().anyMatch(t -> Objects.equals(t.getVideo().getId(), video.getId()));
 	}
 }

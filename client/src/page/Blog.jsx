@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Footer from '../component/layout/Footer'
 import Header from '../component/layout/Header'
 import PageHeader from '../component/layout/PageHeader'
-import Pagination from '../component/sidebar/pagination'
+import Pagination from '../component/sidebar/Pagination'
 import { fetchAllBlogs } from '../redux/action/blogAction'
 
 const BlogPage = () => {
@@ -43,7 +43,7 @@ const BlogPage = () => {
                         </Link>
                       </div>
                       <div className="post-content">
-                        <Link to="/blog-single">
+                        <Link to={`/blog/detail/${blog.id}`}>
                           <h4>{blog.title}</h4>
                         </Link>
                         <div className="meta-post">
@@ -62,7 +62,7 @@ const BlogPage = () => {
                       </div>
                       <div className="post-footer">
                         <div className="pf-left">
-                          <Link to="/blog-single" className="lab-btn-text">
+                          <Link to={`/blog/detail/${blog.id}`} className="lab-btn-text">
                             Read more <i className="icofont-external-link"></i>
                           </Link>
                         </div>

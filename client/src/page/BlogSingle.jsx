@@ -125,7 +125,7 @@ const BlogSingle = () => {
                       </div>
                       <div className="authors">
                         <div className="author-thumb">
-                          <img src={require('../assets/images/author/01.jpg')} alt="rajibraj91" />
+                          <img src={blogDetail.author.avatar} alt="rajibraj91" />
                         </div>
                         <div className="author-content">
                           <h5>{blogDetail.author.name}</h5>

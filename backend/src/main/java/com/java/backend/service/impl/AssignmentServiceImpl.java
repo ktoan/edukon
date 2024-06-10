@@ -44,7 +44,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 		newAssignment.setTitle(assignmentRequest.getTitle());
 		newAssignment.setContent(assignmentRequest.getContent());
 		newAssignment.setRequirement(assignmentRequest.getRequirement());
-		newAssignment.setSource(fileUtil.uploadVideo(assignmentRequest.getFile(), "references"));
+		newAssignment.setDeadline(assignmentRequest.getDeadline());
+		newAssignment.setSource(fileUtil.uploadFile(assignmentRequest.getFile(), "references"));
 		newAssignment.setVideo(video);
 		return assignmentMapper.toDto(saveAssignment(newAssignment));
 	}
@@ -52,18 +53,18 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public AssignmentDto updateAssignment(Integer assignmentId, AssignmentRequest assignmentRequest) {
 		AssignmentEntity updatedAssignment = findAssignmentEntityById(assignmentId);
-		if (assignmentRequest.getTitle()!= null) {
+		if (assignmentRequest.getTitle() != null) {
 			updatedAssignment.setTitle(assignmentRequest.getTitle());
 		}
-		if (assignmentRequest.getContent()!= null) {
-            updatedAssignment.setContent(assignmentRequest.getContent());
-        }
-		if (assignmentRequest.getRequirement()!= null) {
-            updatedAssignment.setRequirement(assignmentRequest.getRequirement());
-        }
-		if (assignmentRequest.getFile()!= null) {
-            updatedAssignment.setSource(fileUtil.uploadVideo(assignmentRequest.getFile(), "references"));
-        }
+		if (assignmentRequest.getContent() != null) {
+			updatedAssignment.setContent(assignmentRequest.getContent());
+		}
+		if (assignmentRequest.getRequirement() != null) {
+			updatedAssignment.setRequirement(assignmentRequest.getRequirement());
+		}
+		if (assignmentRequest.getFile() != null) {
+			updatedAssignment.setSource(fileUtil.uploadVideo(assignmentRequest.getFile(), "references"));
+		}
 
 		return assignmentMapper.toDto(saveAssignment(updatedAssignment));
 	}
@@ -74,7 +75,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		VideoEntity video = deletedAssignment.getVideo();
 		video.setAssignment(null);
 		videoService.saveVideo(video);
-        assignmentRepository.delete(deletedAssignment);
+		assignmentRepository.delete(deletedAssignment);
 	}
 
 	@Override
