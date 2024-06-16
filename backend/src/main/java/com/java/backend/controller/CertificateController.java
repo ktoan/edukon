@@ -25,4 +25,12 @@ public class CertificateController {
 				Map.of("success", true, "certificate", certificateService.getCompletedCertificate(courseId)),
 				HttpStatus.CREATED);
 	}
+
+	@GetMapping("")
+	@Operation(summary = "Get certificates of users")
+	public ResponseEntity<?> getUserCertificates() {
+		return new ResponseEntity<>(
+				Map.of("success", true, "certificates", certificateService.getStudentCertificates()),
+				HttpStatus.OK);
+	}
 }

@@ -69,3 +69,14 @@ export const createSubmission = async (form, next, errorHandle) => {
     errorHandle(error.response ? error.response.data.message : error.message)
   }
 }
+
+export const getUserCertificates = async (next, errorHandle) => {
+  try {
+    const res = await axiosInstance.get(API_ROUTES.getUserCertificates)
+    if (res.data.success) {
+      next(res.data.certificates)
+    }
+  } catch (error) {
+    errorHandle(error.response ? error.response.data.message : error.message)
+  }
+}

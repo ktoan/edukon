@@ -8,12 +8,14 @@ import { logoutUser } from '../redux/action/authAction'
 import { changeUserAvatar, updateUserInformation } from '../redux/action/userAction'
 import { showToastError, showToastSuccess } from '../util/toastAction'
 import { Modal } from 'react-bootstrap'
+import { getUserCertificates } from '../redux/action/courseAction'
 
 const Profile = ({ dispatch, user, requiredLogin }) => {
   const [avatarImage, setAvatarImage] = useState(null)
   const [changeAvatarModalShow, setChangeAvatarModalShow] = useState(false)
   const [changePasswordModalShow, setChangePasswordModalShow] = useState(false)
   const [enrolledCourse, setEnrolledCourse] = useState([])
+  const [certificates, setCertificates] = useState([])
   const [informationForm, setInformationForm] = useState(
     user
       ? {
@@ -61,6 +63,16 @@ const Profile = ({ dispatch, user, requiredLogin }) => {
       console.log(message)
     }
     getEnrolledCourse(next, errorHandle)
+  }, [])
+
+  useEffect(() => {
+    function next(c) {
+      setCertificates(c)
+    }
+    function errorHandle(message) {
+      console.log(message)
+    }
+    getUserCertificates(next, errorHandle)
   }, [])
 
   function onSubmitChangeAvatar() {
@@ -271,7 +283,15 @@ const Profile = ({ dispatch, user, requiredLogin }) => {
           </div>
         </div>
         <div className="tab-pane" id="certificate" role="tabpanel" aria-labelledby="certificate-tab">
-          <h1>Certificate</h1>
+          <div className="p-3 d-flex gap-3">
+            {certificates.map((c, i) => (
+              <a href={c.source} target="_blank">
+                <button key={i} className="text-primary rounded">
+                  {c.course.name}
+                </button>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </Fragment>

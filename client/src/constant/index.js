@@ -27,6 +27,7 @@ export const API_ROUTES = {
   createTrackingProgress: BASE + '/tracking/create',
   // Certificate
   getCertificate: BASE + '/certificate/get',
+  getUserCertificates: BASE + '/certificate',
   // Submission
   createSubmission: BASE + '/submission/create'
 }
